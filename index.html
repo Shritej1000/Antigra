@@ -1,0 +1,1302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AntiGra Systems — Fresh Milk Chai &amp; Filter Coffee Brewing Systems</title>
+<meta name="description" content="AntiGra Systems builds fresh-milk chai and filter coffee brewing machines — SuperBrew SA, SuperBrew Automatic and SmartBrew. No concentrates, no pre-brewed tea. Every cup logged to ChaiCloud."/>
+<meta name="theme-color" content="#0E0D0B"/>
+<meta property="og:title" content="AntiGra Systems — Handmade chai. Machine scale."/>
+<meta property="og:description" content="Fresh-milk chai and filter coffee brewing systems, brewing a million+ cups every week. No concentrates. Every cup logged to ChaiCloud."/>
+<meta property="og:type" content="website"/>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3E%3Crect width='30' height='30' fill='%230E0D0B'/%3E%3Ccircle cx='15' cy='15' r='11' fill='none' stroke='%23D9A05B' stroke-width='1.4'/%3E%3Cpath d='M9.5 19C9.5 14.8 11.8 11 15 9.2C18.2 11 20.5 14.8 20.5 19' fill='none' stroke='%23F0EAE0' stroke-width='1.6'/%3E%3C/svg%3E"/>
+
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter+Tight:ital,wght@0,300;0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@200..600,0..1&display=swap" rel="stylesheet"/>
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script id="tailwind-config">
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          ink: "#0E0D0B",
+          "ink-soft": "#16130F",
+          "ink-raise": "#1D1914",
+          "ink-line": "rgba(240,234,224,0.11)",
+          steam: "#F0EAE0",
+          "steam-dim": "#DFD6C8",
+          "steam-line": "rgba(14,13,11,0.12)",
+          copper: "#D0703F",
+          "copper-dim": "#8A4526",
+          gold: "#D9A05B",
+          steel: "#4A5058",
+          "steel-light": "#8B8578",
+          online: "#6FA97F",
+          offline: "#6B6A64",
+          alert: "#C6503A"
+        },
+        fontFamily: {
+          display: ["Instrument Serif", "Georgia", "serif"],
+          grotesk: ["Inter Tight", "system-ui", "sans-serif"],
+          sans: ["Inter Tight", "system-ui", "sans-serif"],
+          mono: ["JetBrains Mono", "ui-monospace", "monospace"]
+        },
+        spacing: {
+          gutter: "24px",
+          "margin-mobile": "22px",
+          "margin-desktop": "clamp(28px, 5vw, 72px)",
+          "section-gap": "clamp(84px, 11vw, 168px)"
+        }
+      }
+    }
+  };
+</script>
+
+<style>
+  :root{
+    --ink:#0E0D0B; --ink-soft:#16130F; --cream:#F0EAE0;
+    --clay:#D0703F; --gold:#D9A05B;
+    --ease: cubic-bezier(.22,1,.36,1);
+  }
+
+  html{ -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility; }
+  body{
+    background:var(--ink); color:var(--cream);
+    font-family:"Inter Tight", system-ui, sans-serif;
+    font-size:16px; letter-spacing:-0.006em;
+    overflow-x:hidden;
+  }
+  ::selection{ background:var(--clay); color:#fff; }
+  a{ color:inherit; text-decoration:none; }
+  a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible, summary:focus-visible{
+    outline:1px solid var(--gold); outline-offset:3px;
+  }
+
+  /* ---------- type system ---------- */
+  .font-display{ font-family:"Instrument Serif", Georgia, serif; font-weight:400; }
+
+  .d1{ font-family:"Instrument Serif",Georgia,serif; font-weight:400; font-size:clamp(3.1rem, 7.6vw, 6.9rem); line-height:0.94; letter-spacing:-0.022em; }
+  .d2{ font-family:"Instrument Serif",Georgia,serif; font-weight:400; font-size:clamp(2.15rem, 4.7vw, 4.05rem); line-height:1.0;  letter-spacing:-0.018em; }
+  .d3{ font-family:"Instrument Serif",Georgia,serif; font-weight:400; font-size:clamp(1.6rem, 2.6vw, 2.3rem);  line-height:1.1;  letter-spacing:-0.014em; }
+
+  .lbl{
+    font-family:"JetBrains Mono", ui-monospace, monospace;
+    font-size:10.5px; letter-spacing:0.2em; text-transform:uppercase; font-weight:400;
+  }
+  .lede{ font-size:clamp(1.02rem, 1.15vw, 1.19rem); line-height:1.62; letter-spacing:-0.008em; }
+  .body-sm{ font-size:15px; line-height:1.65; letter-spacing:-0.004em; }
+  .tabular{ font-variant-numeric: tabular-nums; }
+  .num{ font-family:"JetBrains Mono", ui-monospace, monospace; font-variant-numeric:tabular-nums; }
+
+  .shell{ max-width:1360px; margin-inline:auto; padding-inline:22px; }
+  @media (min-width:768px){ .shell{ padding-inline:clamp(28px,5vw,72px); } }
+
+  /* hero data rail cells: hairlines that behave at both breakpoints */
+  .rail-cell + .rail-cell{ border-left:1px solid rgba(240,234,224,0.11); }
+  @media (max-width:767px){
+    .rail-cell:nth-child(3), .rail-cell:nth-child(4){ border-top:1px solid rgba(240,234,224,0.11); }
+    .rail-cell:nth-child(3){ border-left:0; }
+  }
+
+  .rule{ height:1px; background:rgba(240,234,224,0.11); width:100%; }
+  .rule-d{ height:1px; background:rgba(14,13,11,0.13); width:100%; }
+
+  /* ---------- film grain ---------- */
+  #grain{
+    position:fixed; inset:0; pointer-events:none; z-index:60; opacity:.04; mix-blend-mode:overlay;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* ---------- scroll progress ---------- */
+  #scroll-progress{ position:fixed; top:0; left:0; height:1px; background:var(--clay); z-index:70; width:0%; }
+
+  /* ---------- motion primitives (visible by default; JS hides only when GSAP is present) ---------- */
+  .mask{ display:block; overflow:hidden; padding-bottom:0.08em; }
+  .mask > span{ display:block; will-change:transform; }
+
+  /* ---------- buttons ---------- */
+  .btn{
+    display:inline-flex; align-items:center; justify-content:center; gap:.65rem;
+    padding:1.05rem 1.9rem; font-size:.9375rem; font-weight:500; letter-spacing:-0.008em;
+    border:1px solid transparent; white-space:nowrap;
+    transition: background .4s var(--ease), color .4s var(--ease), border-color .4s var(--ease);
+  }
+  .btn .arw{ display:inline-block; transition: transform .4s var(--ease); }
+  .btn:hover .arw{ transform: translateX(4px); }
+  .btn:hover .arw.up{ transform: translate(3px,-3px); }
+
+  .btn-primary{ background:var(--cream); color:var(--ink); }
+  .btn-primary:hover{ background:var(--gold); }
+  .btn-ghost{ border-color:rgba(240,234,224,.22); color:var(--cream); }
+  .btn-ghost:hover{ border-color:rgba(240,234,224,.55); background:rgba(240,234,224,.045); }
+  .btn-dark{ background:var(--ink); color:var(--cream); }
+  .btn-dark:hover{ background:var(--clay); color:#fff; }
+  .btn-sm{ padding:.68rem 1.15rem; font-size:.875rem; }
+
+  /* ---------- nav ---------- */
+  #site-nav{ transition: background .4s var(--ease), border-color .4s var(--ease); border-bottom:1px solid transparent; }
+  #site-nav.is-stuck{ background:rgba(14,13,11,.78); backdrop-filter:blur(14px) saturate(1.2); border-bottom-color:rgba(240,234,224,.09); }
+  .nav-link{ position:relative; padding-block:4px; }
+  .nav-link::after{
+    content:""; position:absolute; left:0; right:0; bottom:0; height:1px; background:currentColor;
+    transform:scaleX(0); transform-origin:right; transition:transform .45s var(--ease);
+  }
+  .nav-link:hover::after{ transform:scaleX(1); transform-origin:left; }
+
+  /* ---------- hero ---------- */
+  .hero-sec{ min-height:100vh; min-height:100svh; }
+  #hero-video{
+    position:absolute; inset:0; width:100%; height:100%;
+    object-fit:cover; object-position:50% 42%;
+    filter: grayscale(0.24) sepia(0.06) contrast(1.08) brightness(0.6) saturate(1.05);
+    will-change: transform; opacity:0;
+  }
+  @media (prefers-reduced-motion: reduce){ #hero-video{ opacity:1; } }
+
+  .status-dot{ position:relative; }
+  .status-dot.is-online::before{
+    content:""; position:absolute; inset:-4px; border-radius:9999px; background:#6FA97F; opacity:.35;
+    animation: pulse-ring 2.4s ease-out infinite;
+  }
+  @keyframes pulse-ring{ 0%{ transform:scale(.6); opacity:.45 } 100%{ transform:scale(1.9); opacity:0 } }
+
+  /* ---------- product leader lines ---------- */
+  .leader-line{ stroke:#D0703F; stroke-width:1; fill:none; }
+  .leader-dot{ fill:#D9A05B; }
+  .draw-line{ transform-origin:left center; }
+  .card-rule{ transform-origin:top center; }
+
+  /* ---------- comparison table ---------- */
+  .cmp-wrap{ overflow-x:auto; -webkit-overflow-scrolling:touch; }
+  .cmp-hint{ display:none; }
+  @media (max-width:900px){
+    .cmp-hint{ display:flex; align-items:center; gap:.5rem; }
+    .cmp-wrap{ position:relative; }
+  }
+  .cmp{ width:100%; border-collapse:collapse; min-width:860px; table-layout:fixed; }
+  .cmp th, .cmp td{ text-align:left; padding:22px 28px 22px 0; vertical-align:top; border-bottom:1px solid rgba(240,234,224,.10); }
+  .cmp thead th{ padding-top:0; padding-bottom:20px; }
+  .cmp tbody th{ font-weight:400; color:rgba(240,234,224,.40); width:200px; }
+  .cmp td{ color:rgba(240,234,224,.78); font-size:15px; line-height:1.5; }
+  .cmp tbody tr:last-child th, .cmp tbody tr:last-child td{ border-bottom:none; }
+  .cmp-col-head{ font-size:19px; font-weight:600; color:var(--cream); letter-spacing:-0.015em; display:block; }
+
+  /* ---------- faq ---------- */
+  .faq details{ border-top:1px solid rgba(14,13,11,.13); }
+  .faq details:last-of-type{ border-bottom:1px solid rgba(14,13,11,.13); }
+  .faq summary{
+    list-style:none; cursor:pointer; display:flex; gap:24px; align-items:center;
+    padding:26px 0; font-size:clamp(1.02rem,1.5vw,1.26rem); letter-spacing:-0.014em; font-weight:500;
+    transition:color .3s var(--ease);
+  }
+  .faq summary::-webkit-details-marker{ display:none; }
+  .faq summary:hover{ color:var(--clay); }
+  .faq summary .plus{ margin-left:auto; flex:none; width:14px; height:14px; position:relative; }
+  .faq summary .plus::before,.faq summary .plus::after{
+    content:""; position:absolute; background:currentColor; transition:transform .45s var(--ease), opacity .3s ease;
+  }
+  .faq summary .plus::before{ left:0; right:0; top:6.5px; height:1px; }
+  .faq summary .plus::after{ top:0; bottom:0; left:6.5px; width:1px; }
+  .faq details[open] summary .plus::after{ transform:rotate(90deg); opacity:0; }
+  .faq .ans{ padding:0 0 30px 0; max-width:64ch; }
+
+  /* ---------- form ---------- */
+  .field{ position:relative; border-bottom:1px solid rgba(240,234,224,.18); transition:border-color .35s var(--ease); }
+  .field:focus-within{ border-bottom-color:var(--gold); }
+  .field input, .field textarea, .field select{
+    width:100%; background:transparent; border:0; outline:0; color:var(--cream);
+    font-family:inherit; font-size:16px; letter-spacing:-0.008em; padding:28px 0 12px 0; resize:none;
+    border-radius:0; -webkit-appearance:none; appearance:none;
+  }
+  .field select option{ background:#16130F; color:#F0EAE0; }
+  .field label{
+    position:absolute; left:0; top:24px; pointer-events:none;
+    font-family:"JetBrains Mono",monospace; font-size:10.5px; letter-spacing:.2em; text-transform:uppercase;
+    color:rgba(240,234,224,.42); transition: transform .35s var(--ease), color .35s var(--ease);
+  }
+  .field:focus-within label, .field.filled label{ transform:translateY(-17px); color:var(--gold); }
+  .field .caret{ position:absolute; right:2px; top:36px; pointer-events:none; width:9px; height:9px;
+    border-right:1px solid rgba(240,234,224,.45); border-bottom:1px solid rgba(240,234,224,.45);
+    transform:rotate(45deg); transition:border-color .35s var(--ease); }
+  .field:focus-within .caret{ border-color:var(--gold); }
+
+  /* ---------- misc ---------- */
+  .link-u{ position:relative; }
+  .link-u::after{ content:""; position:absolute; left:0; right:0; bottom:-2px; height:1px; background:currentColor; opacity:.32; transform-origin:right; transition:transform .45s var(--ease), opacity .3s ease; }
+  .link-u:hover::after{ opacity:1; }
+
+  .marquee{ overflow:hidden; display:flex; width:100%; }
+  .marquee-track{ display:flex; align-items:center; gap:56px; padding-right:56px; flex:none; animation: slide 42s linear infinite; }
+  @keyframes slide{ to{ transform:translateX(-100%); } }
+  @media (prefers-reduced-motion: reduce){ .marquee-track{ animation:none; } }
+
+  @media (prefers-reduced-motion: reduce){
+    .status-dot.is-online::before{ animation:none; }
+  }
+</style>
+</head>
+
+<body class="bg-ink text-steam font-sans antialiased">
+
+<div id="grain" aria-hidden="true"></div>
+<div id="scroll-progress" aria-hidden="true"></div>
+
+<!-- ══════════════════════════ NAV ══════════════════════════ -->
+<header id="site-nav" class="fixed top-0 inset-x-0 z-50">
+  <div class="shell h-[76px] flex items-center justify-between">
+
+    <a href="#top" class="flex items-center gap-3 group" aria-label="AntiGra Systems, home">
+      <svg width="26" height="26" viewBox="0 0 30 30" fill="none" aria-hidden="true">
+        <circle cx="15" cy="15" r="13.25" stroke="#D9A05B" stroke-width="1"/>
+        <path d="M9 18.6C9 14.1 11.5 10.1 15 8.1C18.5 10.1 21 14.1 21 18.6" stroke="#F0EAE0" stroke-width="1.15" fill="none"/>
+        <line x1="15" y1="8.1" x2="15" y2="4.6" stroke="#D0703F" stroke-width="1.15"/>
+      </svg>
+      <span class="text-[17px] font-semibold tracking-[-0.02em] leading-none">AntiGra<span class="text-steam/35 font-normal"> Systems</span></span>
+    </a>
+
+    <nav class="hidden lg:flex items-center gap-8 text-[14px] text-steam/60" aria-label="Primary">
+      <a href="#difference" class="nav-link hover:text-steam transition-colors">Why AntiGra</a>
+      <a href="#products" class="nav-link hover:text-steam transition-colors">Machines</a>
+      <a href="#compare" class="nav-link hover:text-steam transition-colors">Compare</a>
+      <a href="#chaicloud" class="nav-link hover:text-steam transition-colors">ChaiCloud</a>
+      <a href="chaicloud-dashboard.html" class="nav-link hover:text-steam transition-colors">Dashboard&nbsp;↗</a>
+    </nav>
+
+    <div class="hidden lg:flex items-center gap-6">
+      <a href="mailto:contact@antigra.com" class="lbl text-steam/45 hover:text-steam transition-colors">contact@antigra.com</a>
+      <a href="#contact" class="btn btn-primary btn-sm">Book a demo</a>
+    </div>
+
+    <button id="menu-btn" class="lg:hidden flex flex-col justify-center gap-[5px] w-9 h-9 -mr-2 items-end" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+      <span class="block w-6 h-px bg-steam transition-transform duration-300"></span>
+      <span class="block w-4 h-px bg-steam transition-all duration-300"></span>
+    </button>
+  </div>
+
+  <div id="mobile-menu" class="lg:hidden hidden bg-ink border-t border-ink-line">
+    <div class="shell py-8 flex flex-col gap-1 text-[19px]">
+      <a href="#difference" class="mobile-link py-2.5 border-b border-ink-line">Why AntiGra</a>
+      <a href="#products" class="mobile-link py-2.5 border-b border-ink-line">Machines</a>
+      <a href="#compare" class="mobile-link py-2.5 border-b border-ink-line">Compare</a>
+      <a href="#chaicloud" class="mobile-link py-2.5 border-b border-ink-line">ChaiCloud</a>
+      <a href="chaicloud-dashboard.html" class="mobile-link py-2.5 border-b border-ink-line">Dashboard ↗</a>
+      <a href="#contact" class="btn btn-primary mt-6 w-full">Book a demo</a>
+      <a href="mailto:contact@antigra.com" class="lbl text-steam/40 mt-6">contact@antigra.com</a>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- ══════════════════════════ HERO ══════════════════════════ -->
+  <section class="hero-sec relative flex flex-col justify-end overflow-hidden">
+
+    <video id="hero-video" muted loop playsinline preload="auto" poster="hero-poster.jpg" aria-hidden="true">
+      <source src="hero-brew.mp4" type="video/mp4"/>
+    </video>
+    <noscript><style>#hero-video{opacity:1}</style></noscript>
+
+    <div class="absolute inset-0 pointer-events-none" style="background: radial-gradient(120% 90% at 70% 38%, transparent 30%, rgba(14,13,11,0.62) 100%);"></div>
+    <div class="absolute inset-0 pointer-events-none" style="background: linear-gradient(to top, #0E0D0B 2%, rgba(14,13,11,0.72) 34%, rgba(14,13,11,0.18) 72%, rgba(14,13,11,0.55) 100%);"></div>
+
+    <!-- live status, top-left under nav -->
+    <div class="absolute top-[104px] md:top-[124px] inset-x-0 z-10">
+      <div class="shell flex items-center gap-3 hero-fade">
+        <span class="status-dot is-online w-[5px] h-[5px] rounded-full bg-online" aria-hidden="true"></span>
+        <span class="lbl text-steam/50">SuperBrew SA · brewing live · Bengaluru</span>
+      </div>
+    </div>
+
+    <!-- headline block -->
+    <div class="relative z-10 shell w-full pb-14 md:pb-16 pt-44">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-x-gutter gap-y-12 items-end">
+
+        <div class="lg:col-span-7">
+          <p class="lbl text-copper mb-7 hero-fade">AntiGra Systems Pvt Ltd &nbsp;·&nbsp; India</p>
+          <h1 class="hero-title d1 text-steam">
+            <span class="mask"><span>Handmade chai.</span></span>
+            <span class="mask"><span class="italic text-steam/90">Machine scale.</span></span>
+          </h1>
+        </div>
+
+        <div class="lg:col-span-5 lg:pb-3">
+          <p class="lede text-steam/70 max-w-[46ch] hero-fade">
+            Fresh-milk chai and South Indian filter coffee, brewed to order by machines built on eighty years of retail chai heritage. No concentrates. No pre-brewed tea. Every cup logged to ChaiCloud.
+          </p>
+          <div class="mt-9 flex flex-wrap items-center gap-3 hero-fade">
+            <a href="#contact" class="btn btn-primary">Book a demo <span class="arw" aria-hidden="true">→</span></a>
+            <a href="#products" class="btn btn-ghost">See the machines</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- data rail -->
+    <div class="relative z-10 border-t border-ink-line bg-ink/40 backdrop-blur-[2px]">
+      <div class="shell grid grid-cols-2 md:grid-cols-4">
+        <div class="rail-cell py-6 pr-5">
+          <p class="num text-[26px] md:text-[30px] text-steam leading-none"><span class="counter" data-target="1" data-decimals="0">1</span>M+</p>
+          <p class="lbl text-steam/40 mt-2.5">Cups every week</p>
+        </div>
+        <div class="rail-cell py-6 pl-5 md:px-5">
+          <p class="num text-[26px] md:text-[30px] text-steam leading-none"><span class="counter" data-target="80" data-decimals="0">80</span>+</p>
+          <p class="lbl text-steam/40 mt-2.5">Years of chai heritage</p>
+        </div>
+        <div class="rail-cell py-6 pr-5 md:px-5">
+          <p class="num text-[26px] md:text-[30px] text-steam leading-none">25s</p>
+          <p class="lbl text-steam/40 mt-2.5">Per cup, SuperBrew</p>
+        </div>
+        <div class="rail-cell py-6 pl-5">
+          <p class="num text-[26px] md:text-[30px] text-copper leading-none">0</p>
+          <p class="lbl text-steam/40 mt-2.5">Concentrates used</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════ CLIENT MARQUEE ══════════════════════════ -->
+  <section class="border-b border-ink-line py-7 overflow-hidden" aria-label="Clients">
+    <div class="flex items-center gap-10">
+      <span class="lbl text-steam/35 pl-[22px] md:pl-[clamp(28px,5vw,72px)] whitespace-nowrap flex-none">Deployed with</span>
+      <div class="marquee flex-1" aria-hidden="true">
+        <div class="marquee-track">
+          <span class="text-[19px] text-steam/55 whitespace-nowrap">Chai Point</span><span class="text-steam/20">/</span>
+          <span class="text-[19px] text-steam/55 whitespace-nowrap">TiE Food Network</span><span class="text-steam/20">/</span>
+          <span class="text-[19px] text-steam/55 whitespace-nowrap">Grown Diamonds</span><span class="text-steam/20">/</span>
+          <span class="text-[19px] text-steam/55 whitespace-nowrap">Corporate campuses</span><span class="text-steam/20">/</span>
+          <span class="text-[19px] text-steam/55 whitespace-nowrap">Manufacturing canteens</span><span class="text-steam/20">/</span>
+          <span class="text-[19px] text-steam/55 whitespace-nowrap">Retail chai chains</span><span class="text-steam/20">/</span>
+        </div>
+        <div class="marquee-track">
+          <span class="text-[19px] text-steam/55 whitespace-nowrap">Chai Point</span><span class="text-steam/20">/</span>
+          <span class="text-[19px] text-steam/55 whitespace-nowrap">TiE Food Network</span><span class="text-steam/20">/</span>
+          <span class="text-[19px] text-steam/55 whitespace-nowrap">Grown Diamonds</span><span class="text-steam/20">/</span>
+          <span class="text-[19px] text-steam/55 whitespace-nowrap">Corporate campuses</span><span class="text-steam/20">/</span>
+          <span class="text-[19px] text-steam/55 whitespace-nowrap">Manufacturing canteens</span><span class="text-steam/20">/</span>
+          <span class="text-[19px] text-steam/55 whitespace-nowrap">Retail chai chains</span><span class="text-steam/20">/</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════ THE DIFFERENCE (light) ══════════════════════════ -->
+  <section id="difference" class="bg-steam text-ink py-section-gap">
+    <div class="shell">
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-x-gutter gap-y-10 items-end">
+        <div class="lg:col-span-7">
+          <p class="lbl text-ink/40 mb-8 reveal">01 &nbsp;—&nbsp; The difference</p>
+          <h2 class="d2 text-ink">
+            <span class="mask"><span>Most machines make tea.</span></span>
+            <span class="mask"><span class="italic">Ours makes chai.</span></span>
+          </h2>
+        </div>
+        <div class="lg:col-span-5">
+          <p class="lede text-ink/60 max-w-[44ch] reveal">
+            The shortcut every other system takes is concentrate — pre-brewed black tea, held warm, cut with powder. It is fast, it is cheap, and your customers can taste it. We refused that trade from the first prototype.
+          </p>
+        </div>
+      </div>
+
+      <div class="rule-d mt-16 mb-0 reveal"></div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3">
+        <div class="reveal py-10 md:pr-12 border-b md:border-b-0 md:border-r border-[rgba(14,13,11,0.13)]">
+          <p class="lbl text-copper-dim mb-6">01</p>
+          <h3 class="d3 text-ink mb-4">Fresh ingredients, every cup</h3>
+          <p class="body-sm text-ink/60 max-w-[38ch]">Fresh milk, fresh water, loose leaf and spices — dosed and brewed at the moment of the order. No pre-brewed black tea. No concentrates. No powders.</p>
+        </div>
+        <div class="reveal py-10 md:px-12 border-b md:border-b-0 md:border-r border-[rgba(14,13,11,0.13)]">
+          <p class="lbl text-copper-dim mb-6">02</p>
+          <h3 class="d3 text-ink mb-4">Patented adaptive brewing</h3>
+          <p class="body-sm text-ink/60 max-w-[38ch]">Our Adaptive Brewing System reads each batch and corrects for it, so cup nine hundred tastes like cup one — across shifts, sites and seasons.</p>
+        </div>
+        <div class="reveal py-10 md:pl-12">
+          <p class="lbl text-copper-dim mb-6">03</p>
+          <h3 class="d3 text-ink mb-4">Every cup is a data point</h3>
+          <p class="body-sm text-ink/60 max-w-[38ch]">Strength, sugar and milk are configurable per cup. Every cup and batch is logged, so consumption, cost and machine health stop being guesswork.</p>
+        </div>
+      </div>
+
+      <div class="rule-d mb-16"></div>
+
+      <!-- origin story -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-x-gutter gap-y-10 items-start">
+        <div class="lg:col-span-5 reveal">
+          <p class="font-display text-[clamp(5rem,13vw,11rem)] leading-[0.8] text-ink tracking-[-0.03em]">80<span class="text-copper">+</span></p>
+          <p class="lbl text-ink/40 mt-6">Years in retail chai, behind every unit</p>
+        </div>
+        <div class="lg:col-span-6 lg:col-start-7 reveal">
+          <p class="lede text-ink/70">
+            AntiGra started in 2016, in embedded systems and software. Two of our three founders grew up in a family that has run a retail packaged tea business for more than eighty years — and they went looking for a machine that could hold that standard at scale.
+          </p>
+          <p class="lede text-ink/55 mt-6">
+            There wasn&rsquo;t one. So we built it, near Mumbai, and kept building: patented brewing that produces a genuine cup in seconds, and a software layer that makes a fleet of machines legible from a single screen.
+          </p>
+          <a href="#contact" class="inline-flex items-center gap-2 mt-9 text-ink font-medium link-u">Talk to the team <span class="arw" aria-hidden="true">→</span></a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ══════════════════════════ PRODUCTS (structure preserved) ══════════════════════════ -->
+  <section id="products" class="py-section-gap">
+    <div class="max-w-[1360px] mx-auto px-margin-mobile md:px-margin-desktop">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-x-gutter gap-y-6 items-end mb-20">
+        <div class="lg:col-span-7">
+          <p class="lbl text-steam/35 mb-8 reveal">02 &nbsp;—&nbsp; The machines</p>
+          <h2 class="d2 text-steam">
+            <span class="mask"><span>Three machines,</span></span>
+            <span class="mask"><span class="italic">one standard.</span></span>
+          </h2>
+        </div>
+        <div class="lg:col-span-5">
+          <p class="lede text-steam/60 max-w-[42ch] reveal">Each one built for a different pace of business. All of them reporting to the same cloud.</p>
+        </div>
+      </div>
+
+      <div class="flex flex-col gap-28 md:gap-36">
+
+        <!-- SuperBrew SA -->
+        <article class="product-row grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-gutter items-center">
+          <div class="md:col-span-6 relative">
+            <div class="relative bg-ink-soft border border-ink-line h-[420px] md:h-[520px] overflow-hidden">
+              <img alt="SuperBrew SA fresh milk chai brewing machine" class="absolute inset-0 w-full h-full object-cover" src="machine-superbrew-sa.jpg" width="1500" height="1200" loading="lazy" decoding="async"/>
+              <span class="absolute inset-0 pointer-events-none" style="background:linear-gradient(to top, rgba(14,13,11,.55), rgba(14,13,11,0) 45%);"></span>
+              <svg class="leader-svg absolute inset-0 w-full h-full z-20 pointer-events-none" viewBox="0 0 100 100" preserveAspectRatio="none">
+                <line class="leader-line" x1="69" y1="30" x2="20" y2="18" pathLength="1"/>
+                <circle class="leader-dot" cx="69" cy="30" r="0.8"/>
+                <line class="leader-line" x1="60" y1="58" x2="20" y2="47" pathLength="1"/>
+                <circle class="leader-dot" cx="60" cy="58" r="0.8"/>
+                <line class="leader-line" x1="64" y1="71" x2="20" y2="80" pathLength="1"/>
+                <circle class="leader-dot" cx="64" cy="71" r="0.8"/>
+              </svg>
+              <div class="absolute left-4 top-[14%] lbl text-copper leader-text opacity-0">Control panel</div>
+              <div class="absolute left-4 top-[43%] lbl text-copper leader-text opacity-0">Brew chamber</div>
+              <div class="absolute left-4 top-[76%] lbl text-copper leader-text opacity-0">Dispense unit</div>
+            </div>
+          </div>
+          <div class="md:col-span-1"></div>
+          <div class="md:col-span-5 flex flex-col gap-4">
+            <span class="inline-flex w-fit items-center px-3 py-1 border border-copper/40 text-copper lbl">Flagship</span>
+            <h3 class="font-grotesk font-semibold text-[28px] tracking-[-0.02em] text-steam">SuperBrew SA</h3>
+            <p class="text-[17px] text-steam/60">Our most premium chai and tea brewing system — fresh chai in under a minute, built for programmes that are judged on taste.</p>
+            <ul class="mt-5 space-y-3.5 text-steam/70 border-t border-ink-line pt-6 text-[15px]">
+              <li class="flex items-start gap-3"><span class="material-symbols-outlined text-copper text-[20px]">precision_manufacturing</span>Fresh chai brewed in under a minute</li>
+              <li class="flex items-start gap-3"><span class="material-symbols-outlined text-copper text-[20px]">cloud_sync</span>Every cup logged to ChaiCloud</li>
+              <li class="flex items-start gap-3"><span class="material-symbols-outlined text-copper text-[20px]">tune</span>Strength, sugar and milk per cup</li>
+            </ul>
+            <a href="#contact" class="mt-4 inline-flex items-center gap-2 font-medium text-steam hover:text-gold transition-colors w-fit link-u">Talk to sales <span class="arw" aria-hidden="true">→</span></a>
+          </div>
+        </article>
+
+        <!-- SuperBrew Automatic -->
+        <article class="product-row grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-gutter items-center">
+          <div class="md:col-span-5 flex flex-col gap-4 order-2 md:order-1">
+            <span class="inline-flex w-fit items-center px-3 py-1 border border-copper/40 text-copper lbl">For offices</span>
+            <h3 class="font-grotesk font-semibold text-[28px] tracking-[-0.02em] text-steam">SuperBrew Automatic</h3>
+            <p class="text-[17px] text-steam/60">Fully automated chai and South Indian filter coffee for workplaces — up to 500 cups a day without a queue.</p>
+            <ul class="mt-5 space-y-3.5 text-steam/70 border-t border-ink-line pt-6 text-[15px]">
+              <li class="flex items-start gap-3"><span class="material-symbols-outlined text-copper text-[20px]">bolt</span>Fresh chai in under 25 seconds</li>
+              <li class="flex items-start gap-3"><span class="material-symbols-outlined text-copper text-[20px]">sensors</span>Chai and filter coffee, both fresh</li>
+              <li class="flex items-start gap-3"><span class="material-symbols-outlined text-copper text-[20px]">settings_remote</span>Daily cleaning in under 10 minutes</li>
+            </ul>
+            <a href="#contact" class="mt-4 inline-flex items-center gap-2 font-medium text-steam hover:text-gold transition-colors w-fit link-u">Talk to sales <span class="arw" aria-hidden="true">→</span></a>
+          </div>
+          <div class="md:col-span-1 order-1 md:order-2"></div>
+          <div class="md:col-span-6 order-1 md:order-3 relative">
+            <div class="relative bg-ink-soft border border-ink-line h-[420px] md:h-[520px] overflow-hidden">
+              <img alt="SuperBrew Automatic chai and filter coffee machine" class="absolute inset-0 w-full h-full object-cover" src="machine-superbrew-automatic.jpg" width="1500" height="1200" loading="lazy" decoding="async"/>
+              <span class="absolute inset-0 pointer-events-none" style="background:linear-gradient(to top, rgba(14,13,11,.55), rgba(14,13,11,0) 45%);"></span>
+              <svg class="leader-svg absolute inset-0 w-full h-full z-20 pointer-events-none" viewBox="0 0 100 100" preserveAspectRatio="none">
+                <line class="leader-line" x1="36" y1="25" x2="18" y2="15" pathLength="1"/>
+                <circle class="leader-dot" cx="36" cy="25" r="0.8"/>
+                <line class="leader-line" x1="39" y1="76" x2="18" y2="88" pathLength="1"/>
+                <circle class="leader-dot" cx="39" cy="76" r="0.8"/>
+              </svg>
+              <div class="absolute left-4 top-[11%] lbl text-copper leader-text opacity-0">Touch display</div>
+              <div class="absolute left-4 top-[84%] lbl text-copper leader-text opacity-0">Dispense outlet</div>
+            </div>
+          </div>
+        </article>
+
+        <!-- SmartBrew -->
+        <article class="product-row grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-gutter items-center">
+          <div class="md:col-span-6 relative">
+            <div class="relative bg-ink-soft border border-ink-line h-[420px] md:h-[520px] overflow-hidden">
+              <img alt="SmartBrew high capacity bulk chai brewing machine" class="absolute inset-0 w-full h-full object-cover" src="machine-smartbrew.jpg" width="1500" height="1200" loading="lazy" decoding="async"/>
+              <span class="absolute inset-0 pointer-events-none" style="background:linear-gradient(to top, rgba(14,13,11,.55), rgba(14,13,11,0) 45%);"></span>
+              <svg class="leader-svg absolute inset-0 w-full h-full z-20 pointer-events-none" viewBox="0 0 100 100" preserveAspectRatio="none">
+                <line class="leader-line" x1="38" y1="22" x2="78" y2="12" pathLength="1"/>
+                <circle class="leader-dot" cx="38" cy="22" r="0.8"/>
+                <line class="leader-line" x1="41" y1="63" x2="78" y2="70" pathLength="1"/>
+                <circle class="leader-dot" cx="41" cy="63" r="0.8"/>
+              </svg>
+              <div class="absolute right-4 top-[8%] lbl text-copper leader-text opacity-0">Ingredient canisters</div>
+              <div class="absolute right-4 top-[66%] lbl text-copper leader-text opacity-0">Bulk brew vessel</div>
+            </div>
+          </div>
+          <div class="md:col-span-1"></div>
+          <div class="md:col-span-5 flex flex-col gap-4">
+            <span class="inline-flex w-fit items-center px-3 py-1 border border-copper/40 text-copper lbl">High-capacity</span>
+            <h3 class="font-grotesk font-semibold text-[28px] tracking-[-0.02em] text-steam">SmartBrew</h3>
+            <p class="text-[17px] text-steam/60">High-capacity bulk chai for high-throughput stores, canteens and 24-hour sites — 100 ml to 3 litres in a single batch.</p>
+            <ul class="mt-5 space-y-3.5 text-steam/70 border-t border-ink-line pt-6 text-[15px]">
+              <li class="flex items-start gap-3"><span class="material-symbols-outlined text-copper text-[20px]">water_drop</span>Brew 100 ml to 3 L at a time</li>
+              <li class="flex items-start gap-3"><span class="material-symbols-outlined text-copper text-[20px]">thermostat</span>Daily cleaning in under 7 minutes</li>
+              <li class="flex items-start gap-3"><span class="material-symbols-outlined text-copper text-[20px]">monitoring</span>Every batch logged on ChaiCloud</li>
+            </ul>
+            <a href="#contact" class="mt-4 inline-flex items-center gap-2 font-medium text-steam hover:text-gold transition-colors w-fit link-u">Talk to sales <span class="arw" aria-hidden="true">→</span></a>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════ COMPARE ══════════════════════════ -->
+  <section id="compare" class="bg-ink-soft border-y border-ink-line py-section-gap">
+    <div class="shell">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-x-gutter gap-y-6 items-end mb-16">
+        <div class="lg:col-span-7">
+          <p class="lbl text-steam/35 mb-8 reveal">03 &nbsp;—&nbsp; Specification</p>
+          <h2 class="d2 text-steam"><span class="mask"><span>Which one fits your site?</span></span></h2>
+        </div>
+        <div class="lg:col-span-5">
+          <p class="lede text-steam/60 max-w-[42ch] reveal">Tell us your daily volume and we&rsquo;ll size it with you. Most sites land in under one call.</p>
+        </div>
+      </div>
+
+      <p class="cmp-hint lbl text-steam/30 mb-5">Swipe to compare <span aria-hidden="true">→</span></p>
+
+      <div class="cmp-wrap reveal">
+        <table class="cmp">
+          <caption class="sr-only">Comparison of SuperBrew SA, SuperBrew Automatic and SmartBrew</caption>
+          <colgroup><col style="width:180px"/><col/><col/><col/></colgroup>
+          <thead>
+            <tr>
+              <th scope="col"><span class="lbl text-steam/35">Model</span></th>
+              <th scope="col"><span class="cmp-col-head">SuperBrew SA</span><span class="lbl text-copper mt-2 block">Flagship</span></th>
+              <th scope="col"><span class="cmp-col-head">SuperBrew Automatic</span><span class="lbl text-copper mt-2 block">Offices</span></th>
+              <th scope="col"><span class="cmp-col-head">SmartBrew</span><span class="lbl text-copper mt-2 block">High-capacity</span></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row" class="lbl">Best for</th>
+              <td>Premium chai &amp; tea programmes</td>
+              <td>Offices and workplace pantries</td>
+              <td>High-throughput stores and canteens</td>
+            </tr>
+            <tr>
+              <th scope="row" class="lbl">Serve time</th>
+              <td class="num text-steam">&lt; 60 s <span class="font-sans text-steam/45">/ cup</span></td>
+              <td class="num text-steam">&lt; 25 s <span class="font-sans text-steam/45">/ cup</span></td>
+              <td class="num text-steam">Batch <span class="font-sans text-steam/45">brewed</span></td>
+            </tr>
+            <tr>
+              <th scope="row" class="lbl">Output</th>
+              <td>Per-cup, brewed to order</td>
+              <td class="num text-steam">Up to 500 <span class="font-sans text-steam/45">cups / day</span></td>
+              <td class="num text-steam">100 ml – 3 L <span class="font-sans text-steam/45">/ batch</span></td>
+            </tr>
+            <tr>
+              <th scope="row" class="lbl">Beverages</th>
+              <td>Chai, black tea, green tea, iced tea, spice add-ons</td>
+              <td>Chai and South Indian filter coffee</td>
+              <td>Chai and teas, modular recipes</td>
+            </tr>
+            <tr>
+              <th scope="row" class="lbl">Daily cleaning</th>
+              <td>Automatic, minutes</td>
+              <td class="num text-steam">&lt; 10 min</td>
+              <td class="num text-steam">&lt; 7 min</td>
+            </tr>
+            <tr>
+              <th scope="row" class="lbl">Ingredients</th>
+              <td colspan="3">Fresh milk, fresh water, loose leaf and spices. No concentrates, no pre-brewed tea, on every model.</td>
+            </tr>
+            <tr>
+              <th scope="row" class="lbl">ChaiCloud</th>
+              <td colspan="3">Included. Per-cup and per-batch logging, machine health, remote diagnostics and location analytics.</td>
+            </tr>
+            <tr>
+              <th scope="row" class="lbl">Footprint</th>
+              <td class="num text-steam">380 × 425 × 700 mm</td>
+              <td>Counter-top</td>
+              <td>Counter-top</td>
+            </tr>
+            <tr>
+              <th scope="row"></th>
+              <td><a href="#contact" class="btn btn-ghost btn-sm">Enquire <span class="arw" aria-hidden="true">→</span></a></td>
+              <td><a href="#contact" class="btn btn-ghost btn-sm">Enquire <span class="arw" aria-hidden="true">→</span></a></td>
+              <td><a href="#contact" class="btn btn-ghost btn-sm">Enquire <span class="arw" aria-hidden="true">→</span></a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════ CHAICLOUD ══════════════════════════ -->
+  <section id="chaicloud" class="py-section-gap">
+    <div class="shell">
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-x-gutter gap-y-6 items-end mb-16">
+        <div class="lg:col-span-7">
+          <p class="lbl text-steam/35 mb-8 reveal">04 &nbsp;—&nbsp; ChaiCloud</p>
+          <h2 class="d2 text-steam">
+            <span class="mask"><span>Every machine,</span></span>
+            <span class="mask"><span class="italic">one dashboard.</span></span>
+          </h2>
+        </div>
+        <div class="lg:col-span-5">
+          <p class="lede text-steam/60 max-w-[44ch] reveal">Granular information about every machine at a glance — status, output and health, organised the way an operations team actually works.</p>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-x-gutter gap-y-14 items-start">
+
+        <div class="lg:col-span-4">
+          <div class="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-1 gap-9">
+            <div class="reveal">
+              <p class="lbl text-copper mb-4 pb-4 border-b border-ink-line">Machines</p>
+              <ul class="space-y-2.5 body-sm text-steam/60">
+                <li>Online / offline status</li>
+                <li>Machine health</li>
+                <li>Error alerts</li>
+                <li>Recipe configuration</li>
+                <li>Remote diagnostics</li>
+                <li>Maintenance history</li>
+              </ul>
+            </div>
+            <div class="reveal">
+              <p class="lbl text-copper mb-4 pb-4 border-b border-ink-line">Usage</p>
+              <ul class="space-y-2.5 body-sm text-steam/60">
+                <li>Cups &amp; batches brewed</li>
+                <li>Daily / weekly / monthly</li>
+                <li>Consumption trends</li>
+              </ul>
+            </div>
+            <div class="reveal">
+              <p class="lbl text-copper mb-4 pb-4 border-b border-ink-line">Analytics</p>
+              <ul class="space-y-2.5 body-sm text-steam/60">
+                <li>Usage trends</li>
+                <li>Machine efficiency</li>
+                <li>Machine comparison</li>
+                <li>Location-wise analytics</li>
+              </ul>
+            </div>
+          </div>
+
+          <a href="chaicloud-dashboard.html" class="btn btn-primary mt-10 w-full sm:w-auto">Open the live dashboard <span class="arw up" aria-hidden="true">↗</span></a>
+        </div>
+
+        <div class="lg:col-span-8">
+          <div class="chaicloud-panel border border-ink-line bg-ink-soft lg:sticky lg:top-24">
+            <div class="flex items-center justify-between px-5 py-3.5 border-b border-ink-line">
+              <div class="flex items-center gap-2.5">
+                <span class="w-1.5 h-1.5 rounded-full bg-copper"></span>
+                <span class="font-semibold text-[14px] text-steam tracking-[-0.01em]">ChaiCloud</span>
+                <span class="lbl text-steam/30">Overview</span>
+              </div>
+              <span class="lbl text-steam/30">42 machines connected</span>
+            </div>
+
+            <div class="p-5 grid grid-cols-2 md:grid-cols-4 gap-3">
+              <div class="border border-ink-line p-4">
+                <p class="lbl text-steam/35">Online</p>
+                <p class="num text-[22px] text-steam mt-2">38/42</p>
+              </div>
+              <div class="border border-ink-line p-4">
+                <p class="lbl text-steam/35">Cups today</p>
+                <p class="num text-[22px] text-steam mt-2">4,812</p>
+              </div>
+              <div class="border border-ink-line p-4">
+                <p class="lbl text-steam/35">Avg. health</p>
+                <p class="num text-[22px] text-steam mt-2">90%</p>
+              </div>
+              <div class="border border-ink-line p-4">
+                <p class="lbl text-steam/35">Alerts</p>
+                <p class="num text-[22px] text-alert mt-2">3</p>
+              </div>
+            </div>
+
+            <div class="px-5 pb-5 grid grid-cols-1 md:grid-cols-5 gap-4">
+              <div class="md:col-span-3 border border-ink-line divide-y divide-ink-line">
+                <div class="flex items-center justify-between px-4 py-3 text-[13px]">
+                  <span class="flex items-center gap-2.5"><span class="status-dot is-online w-1.5 h-1.5 rounded-full bg-online"></span>Bengaluru — HSR Layout</span>
+                  <span class="num text-steam/50 text-[12px]">214 cups</span>
+                </div>
+                <div class="flex items-center justify-between px-4 py-3 text-[13px]">
+                  <span class="flex items-center gap-2.5"><span class="status-dot is-online w-1.5 h-1.5 rounded-full bg-online"></span>Mumbai — BKC</span>
+                  <span class="num text-steam/50 text-[12px]">189 cups</span>
+                </div>
+                <div class="flex items-center justify-between px-4 py-3 text-[13px]">
+                  <span class="flex items-center gap-2.5"><span class="w-1.5 h-1.5 rounded-full bg-offline"></span>Pune — Hinjewadi</span>
+                  <span class="num text-alert/80 text-[12px]">Offline</span>
+                </div>
+                <div class="flex items-center justify-between px-4 py-3 text-[13px]">
+                  <span class="flex items-center gap-2.5"><span class="status-dot is-online w-1.5 h-1.5 rounded-full bg-online"></span>Delhi — Cyber City</span>
+                  <span class="num text-steam/50 text-[12px]">167 cups</span>
+                </div>
+              </div>
+              <div class="md:col-span-2 border border-ink-line p-4 flex flex-col">
+                <p class="lbl text-steam/35 mb-4">Cups this week</p>
+                <div class="flex items-end gap-1.5 h-24 flex-1">
+                  <div class="bar flex-1 bg-copper/55" style="height:78%"></div>
+                  <div class="bar flex-1 bg-copper/55" style="height:83%"></div>
+                  <div class="bar flex-1 bg-copper/55" style="height:80%"></div>
+                  <div class="bar flex-1 bg-copper/55" style="height:90%"></div>
+                  <div class="bar flex-1 bg-gold" style="height:95%"></div>
+                  <div class="bar flex-1 bg-copper/30" style="height:73%"></div>
+                  <div class="bar flex-1 bg-copper/30" style="height:62%"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════ PROCESS ══════════════════════════ -->
+  <section class="border-t border-ink-line py-section-gap">
+    <div class="shell">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-x-gutter gap-y-12">
+        <div class="lg:col-span-4">
+          <p class="lbl text-steam/35 mb-8 reveal">05 &nbsp;—&nbsp; Getting started</p>
+          <h2 class="d2 text-steam mb-6"><span class="mask"><span>From enquiry</span></span><span class="mask"><span class="italic">to first cup.</span></span></h2>
+          <p class="lede text-steam/55 max-w-[36ch] reveal">Three steps. No procurement theatre.</p>
+        </div>
+
+        <div class="lg:col-span-8 lg:pl-12">
+          <ol class="border-t border-ink-line">
+            <li class="reveal grid grid-cols-[auto_1fr] gap-x-8 md:gap-x-14 py-9 border-b border-ink-line">
+              <span class="lbl text-copper pt-1.5">01</span>
+              <div>
+                <h3 class="d3 text-steam mb-3">Tell us your volume</h3>
+                <p class="body-sm text-steam/60 max-w-[52ch]">Daily cups, number of sites, whether you need filter coffee. We come back with the right model and an honest running cost — usually the same day.</p>
+              </div>
+            </li>
+            <li class="reveal grid grid-cols-[auto_1fr] gap-x-8 md:gap-x-14 py-9 border-b border-ink-line">
+              <span class="lbl text-copper pt-1.5">02</span>
+              <div>
+                <h3 class="d3 text-steam mb-3">Taste it on your counter</h3>
+                <p class="body-sm text-steam/60 max-w-[52ch]">We install a unit at one of your sites and dial the recipe to your blend. Your team tastes it against what they serve today, for as long as it takes to be sure.</p>
+              </div>
+            </li>
+            <li class="reveal grid grid-cols-[auto_1fr] gap-x-8 md:gap-x-14 py-9 border-b border-ink-line">
+              <span class="lbl text-copper pt-1.5">03</span>
+              <div>
+                <h3 class="d3 text-steam mb-3">Roll out with ChaiCloud on day one</h3>
+                <p class="body-sm text-steam/60 max-w-[52ch]">Every unit ships connected. Recipes push from the dashboard, faults surface before your team notices, and consumption reporting starts with the first cup.</p>
+              </div>
+            </li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════ TESTIMONIALS (light) ══════════════════════════ -->
+  <section id="clients" class="bg-steam text-ink py-section-gap">
+    <div class="shell">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-x-gutter gap-y-6 items-end mb-16">
+        <div class="lg:col-span-7">
+          <p class="lbl text-ink/40 mb-8 reveal">06 &nbsp;—&nbsp; In the field</p>
+          <h2 class="d2 text-ink"><span class="mask"><span>What our clients say.</span></span></h2>
+        </div>
+        <div class="lg:col-span-5">
+          <p class="lede text-ink/55 max-w-[40ch] reveal">Retail chains, manufacturing floors and food networks — running our machines every day.</p>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-x-gutter gap-y-14">
+
+        <div class="testimonial-card relative pl-7 flex flex-col">
+          <span class="card-rule absolute left-0 top-0 bottom-0 w-px bg-copper" aria-hidden="true"></span>
+          <p class="card-copy font-display text-[clamp(1.2rem,1.7vw,1.5rem)] leading-[1.42] text-ink/85 flex-grow">&ldquo;We have been sourcing &amp; refining brewing systems from AntiGra for quite some time now and are pleased with the build quality of their machines. AntiGra&rsquo;s software integration with our Chai Point&rsquo;s cloud based application stack has enabled us to provide consistent, good quality chai across all our stores.&rdquo;</p>
+          <div class="card-copy mt-8 pt-5 border-t border-[rgba(14,13,11,0.13)]">
+            <p class="font-semibold text-ink tracking-[-0.01em]">Amuleek Singh Bijral</p>
+            <p class="lbl text-ink/45 mt-2">CEO — Chai Point · Bengaluru</p>
+          </div>
+        </div>
+
+        <div class="testimonial-card relative pl-7 flex flex-col">
+          <span class="card-rule absolute left-0 top-0 bottom-0 w-px bg-copper" aria-hidden="true"></span>
+          <p class="card-copy font-display text-[clamp(1.2rem,1.7vw,1.5rem)] leading-[1.42] text-ink/85 flex-grow">&ldquo;With SmartBrew, serving hot chai has become very easy and my employees love the taste. For the night shift, getting chai delivery was not possible, but with SmartBrew, we now serve a quality cup of chai at night as well.&rdquo;</p>
+          <div class="card-copy mt-8 pt-5 border-t border-[rgba(14,13,11,0.13)]">
+            <p class="font-semibold text-ink tracking-[-0.01em]">Viral Mehta</p>
+            <p class="lbl text-ink/45 mt-2">Director — Grown Diamonds Pvt Ltd. · BKC, Mumbai</p>
+          </div>
+        </div>
+
+        <div class="testimonial-card relative pl-7 flex flex-col">
+          <span class="card-rule absolute left-0 top-0 bottom-0 w-px bg-copper" aria-hidden="true"></span>
+          <p class="card-copy font-display text-[clamp(1.2rem,1.7vw,1.5rem)] leading-[1.42] text-ink/85 flex-grow">&ldquo;I had been looking for a good chai machine for a long time. SuperBrew makes authentic Indian chai. It has tons of customization options and is IoT based which enables better control like setting favorites, remote diagnosis and much more.&rdquo;</p>
+          <div class="card-copy mt-8 pt-5 border-t border-[rgba(14,13,11,0.13)]">
+            <p class="font-semibold text-ink tracking-[-0.01em]">Sanket S</p>
+            <p class="lbl text-ink/45 mt-2">Core Team Lead — TiE Food Network · Mumbai</p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- FAQ -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-x-gutter gap-y-10 mt-28 md:mt-36">
+        <div class="lg:col-span-4">
+          <p class="lbl text-ink/40 mb-8 reveal">07 &nbsp;—&nbsp; Before you ask</p>
+          <h2 class="d2 text-ink"><span class="mask"><span>Straight answers.</span></span></h2>
+          <p class="lede text-ink/55 mt-6 max-w-[34ch] reveal">Anything not covered here, ask us directly — <a href="mailto:contact@antigra.com" class="text-ink link-u">contact@antigra.com</a>.</p>
+        </div>
+
+        <div class="lg:col-span-8 faq">
+          <details>
+            <summary>Do you use concentrate or pre-brewed tea?<span class="plus" aria-hidden="true"></span></summary>
+            <div class="ans body-sm text-ink/60">No. Not on any model. Every cup is brewed from fresh milk, fresh water, tea leaves and spices at the moment it is ordered. There is no pre-brewed black tea held warm in a tank, and no powdered concentrate anywhere in the flow path. It is the whole reason the company exists.</div>
+          </details>
+          <details>
+            <summary>Can it make South Indian filter coffee too?<span class="plus" aria-hidden="true"></span></summary>
+            <div class="ans body-sm text-ink/60">Yes — SuperBrew Automatic brews both chai and authentic filter coffee from fresh ingredients, which is why it is the usual choice for offices serving a mixed team. SuperBrew SA is specialised for chai and teas: chai with spice add-ons, black tea, and green tea for iced tea programmes.</div>
+          </details>
+          <details>
+            <summary>How much daily maintenance does it need?<span class="plus" aria-hidden="true"></span></summary>
+            <div class="ans body-sm text-ink/60">SmartBrew cleans down in under seven minutes a day, SuperBrew Automatic in under ten, and SuperBrew SA runs an automatic daily clean that takes minutes and needs no trained operator. There is no dismantling and no specialist chemistry — a pantry team handles it as part of close-down.</div>
+          </details>
+          <details>
+            <summary>Can each site run a different recipe?<span class="plus" aria-hidden="true"></span></summary>
+            <div class="ans body-sm text-ink/60">Yes. Strength, sugar and milk are configurable down to the individual cup, and recipes are set per machine and per location from ChaiCloud. Chains typically hold one house recipe across all sites and vary sweetness by region; that is a dashboard change, not a service visit.</div>
+          </details>
+          <details>
+            <summary>What does ChaiCloud actually give me?<span class="plus" aria-hidden="true"></span></summary>
+            <div class="ans body-sm text-ink/60">Live online/offline status and health for every machine, error alerts, remote diagnostics and maintenance history; cups and batches brewed by day, week and month; and analytics on usage trends, machine efficiency, machine-to-machine comparison and location-wise performance. You can walk through the real interface on the <a href="chaicloud-dashboard.html" class="text-ink link-u">dashboard</a>.</div>
+          </details>
+          <details>
+            <summary>How much space does a unit need?<span class="plus" aria-hidden="true"></span></summary>
+            <div class="ans body-sm text-ink/60">All three models are designed to fit a small footprint — an existing pantry counter or store back-bar, not a new room. Send us a photo and the counter dimensions with your enquiry and we will confirm the fit before anything is ordered.</div>
+          </details>
+          <details>
+            <summary>Where are you based, and where do you deploy?<span class="plus" aria-hidden="true"></span></summary>
+            <div class="ans body-sm text-ink/60">AntiGra Systems Pvt Ltd is based near Mumbai, India, where the machines are engineered and built. Units run today across Bengaluru, Mumbai, Pune and Delhi NCR with retail chains, manufacturing sites and corporate campuses.</div>
+          </details>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ══════════════════════════ CONTACT ══════════════════════════ -->
+  <section id="contact" class="py-section-gap">
+    <div class="shell">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-x-gutter gap-y-16">
+
+        <div class="lg:col-span-5">
+          <p class="lbl text-copper mb-8 reveal">08 &nbsp;—&nbsp; Get in touch</p>
+          <h2 class="d2 text-steam mb-7">
+            <span class="mask"><span>Let&rsquo;s brew a cup</span></span>
+            <span class="mask"><span class="italic">on your counter.</span></span>
+          </h2>
+          <p class="lede text-steam/60 max-w-[40ch] reveal">
+            Tell us your daily volume and how many sites you run. We&rsquo;ll come back with the right machine, a running cost, and a date to put one in front of your team.
+          </p>
+
+          <div class="mt-12 space-y-6 reveal">
+            <div>
+              <p class="lbl text-steam/35 mb-2">Email</p>
+              <a href="mailto:contact@antigra.com" class="text-[19px] text-steam link-u">contact@antigra.com</a>
+            </div>
+            <div>
+              <p class="lbl text-steam/35 mb-2">Company</p>
+              <p class="text-[17px] text-steam/70">AntiGra Systems Pvt Ltd<br/><span class="text-steam/45">Near Mumbai, India</span></p>
+            </div>
+            <div>
+              <p class="lbl text-steam/35 mb-3">Elsewhere</p>
+              <div class="flex flex-wrap gap-x-6 gap-y-2 text-[15px] text-steam/70">
+                <a href="https://www.linkedin.com/company/antigrasystems" target="_blank" rel="noopener" class="link-u">LinkedIn</a>
+                <a href="https://www.instagram.com/superbrew.official/" target="_blank" rel="noopener" class="link-u">Instagram</a>
+                <a href="https://www.youtube.com/@antigrasystems7221" target="_blank" rel="noopener" class="link-u">YouTube</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="lg:col-span-6 lg:col-start-7">
+          <form id="enquiry" class="reveal" novalidate>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-gutter gap-y-3">
+              <div class="field"><input id="f-name" name="name" type="text" placeholder=" " autocomplete="name" required/><label for="f-name">Name *</label></div>
+              <div class="field"><input id="f-company" name="company" type="text" placeholder=" " autocomplete="organization"/><label for="f-company">Company</label></div>
+              <div class="field"><input id="f-email" name="email" type="email" placeholder=" " autocomplete="email" required/><label for="f-email">Email *</label></div>
+              <div class="field"><input id="f-phone" name="phone" type="tel" placeholder=" " autocomplete="tel"/><label for="f-phone">Phone</label></div>
+
+              <div class="field">
+                <select id="f-product" name="product">
+                  <option value="Not sure yet">Not sure yet</option>
+                  <option value="SuperBrew SA">SuperBrew SA</option>
+                  <option value="SuperBrew Automatic">SuperBrew Automatic</option>
+                  <option value="SmartBrew">SmartBrew</option>
+                  <option value="ChaiCloud only">ChaiCloud only</option>
+                </select>
+                <label for="f-product">Interested in</label>
+                <span class="caret" aria-hidden="true"></span>
+              </div>
+              <div class="field">
+                <select id="f-volume" name="volume">
+                  <option value="Under 100">Under 100</option>
+                  <option value="100–300">100 – 300</option>
+                  <option value="300–500">300 – 500</option>
+                  <option value="500+">500+</option>
+                </select>
+                <label for="f-volume">Cups per day</label>
+                <span class="caret" aria-hidden="true"></span>
+              </div>
+
+              <div class="field sm:col-span-2"><textarea id="f-desc" name="description" rows="3" placeholder=" "></textarea><label for="f-desc">Tell us about your sites</label></div>
+            </div>
+
+            <div class="mt-10 flex flex-col sm:flex-row sm:items-center gap-5">
+              <button type="submit" class="btn btn-primary w-full sm:w-auto">Send enquiry <span class="arw" aria-hidden="true">→</span></button>
+              <p class="lbl text-steam/30 leading-[1.7] max-w-[26ch]">Opens your mail client. We reply within one working day.</p>
+            </div>
+            <p id="form-note" class="mt-5 text-[14px] text-gold" role="status" hidden></p>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ══════════════════════════ FOOTER ══════════════════════════ -->
+<footer class="border-t border-ink-line">
+  <div class="shell pt-20 pb-10">
+
+    <div class="grid grid-cols-2 lg:grid-cols-12 gap-x-gutter gap-y-12">
+      <div class="col-span-2 lg:col-span-5">
+        <div class="flex items-center gap-3">
+          <svg width="24" height="24" viewBox="0 0 30 30" fill="none" aria-hidden="true">
+            <circle cx="15" cy="15" r="13.25" stroke="#D9A05B" stroke-width="1"/>
+            <path d="M9 18.6C9 14.1 11.5 10.1 15 8.1C18.5 10.1 21 14.1 21 18.6" stroke="#F0EAE0" stroke-width="1.15" fill="none"/>
+            <line x1="15" y1="8.1" x2="15" y2="4.6" stroke="#D0703F" stroke-width="1.15"/>
+          </svg>
+          <span class="text-[17px] font-semibold tracking-[-0.02em]">AntiGra Systems</span>
+        </div>
+        <p class="body-sm text-steam/45 max-w-[36ch] mt-5">Fresh milk chai and filter coffee brewing systems, engineered near Mumbai and monitored on ChaiCloud.</p>
+        <a href="#contact" class="btn btn-ghost btn-sm mt-8">Book a demo <span class="arw" aria-hidden="true">→</span></a>
+      </div>
+
+      <div class="lg:col-span-2 lg:col-start-7 flex flex-col gap-3">
+        <p class="lbl text-steam/30 mb-2">Machines</p>
+        <a class="text-[15px] text-steam/65 hover:text-steam transition-colors" href="#products">SuperBrew SA</a>
+        <a class="text-[15px] text-steam/65 hover:text-steam transition-colors" href="#products">SuperBrew Automatic</a>
+        <a class="text-[15px] text-steam/65 hover:text-steam transition-colors" href="#products">SmartBrew</a>
+        <a class="text-[15px] text-steam/65 hover:text-steam transition-colors" href="#compare">Compare models</a>
+      </div>
+
+      <div class="lg:col-span-2 flex flex-col gap-3">
+        <p class="lbl text-steam/30 mb-2">Platform</p>
+        <a class="text-[15px] text-steam/65 hover:text-steam transition-colors" href="#chaicloud">ChaiCloud</a>
+        <a class="text-[15px] text-steam/65 hover:text-steam transition-colors" href="chaicloud-dashboard.html">Live dashboard ↗</a>
+        <a class="text-[15px] text-steam/65 hover:text-steam transition-colors" href="#clients">Clients</a>
+        <a class="text-[15px] text-steam/65 hover:text-steam transition-colors" href="#difference">Why AntiGra</a>
+      </div>
+
+      <div class="lg:col-span-2 flex flex-col gap-3">
+        <p class="lbl text-steam/30 mb-2">Connect</p>
+        <a class="text-[15px] text-steam/65 hover:text-steam transition-colors" href="https://www.linkedin.com/company/antigrasystems" target="_blank" rel="noopener">LinkedIn ↗</a>
+        <a class="text-[15px] text-steam/65 hover:text-steam transition-colors" href="https://www.instagram.com/superbrew.official/" target="_blank" rel="noopener">Instagram ↗</a>
+        <a class="text-[15px] text-steam/65 hover:text-steam transition-colors" href="https://www.youtube.com/@antigrasystems7221" target="_blank" rel="noopener">YouTube ↗</a>
+        <a class="text-[15px] text-gold mt-1" href="mailto:contact@antigra.com">contact@antigra.com</a>
+      </div>
+    </div>
+
+    <div class="rule mt-16 mb-6"></div>
+    <div class="flex flex-col sm:flex-row justify-between gap-3">
+      <p class="lbl text-steam/30">© 2026 AntiGra Systems Pvt Ltd · India</p>
+      <p class="lbl text-steam/30">Brewing a million+ cups every week</p>
+    </div>
+  </div>
+</footer>
+
+<!-- ══════════════════════════ LIBRARIES ══════════════════════════ -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
+
+<script>
+(function () {
+  "use strict";
+
+  var reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var hasGsap = !!(window.gsap && window.ScrollTrigger);
+  var EASE = "power3.out";
+
+  if (hasGsap) gsap.registerPlugin(ScrollTrigger);
+
+  /* ---------- mobile menu ---------- */
+  var menuBtn = document.getElementById("menu-btn");
+  var mobileMenu = document.getElementById("mobile-menu");
+  if (menuBtn && mobileMenu) {
+    var bars = menuBtn.querySelectorAll("span");
+    var setMenu = function (open) {
+      mobileMenu.classList.toggle("hidden", !open);
+      menuBtn.setAttribute("aria-expanded", String(open));
+      bars[0].style.transform = open ? "translateY(3px) rotate(45deg)" : "";
+      bars[1].style.transform = open ? "translateY(-3px) rotate(-45deg)" : "";
+      bars[1].style.width = open ? "24px" : "";
+    };
+    menuBtn.addEventListener("click", function () {
+      setMenu(mobileMenu.classList.contains("hidden"));
+    });
+    mobileMenu.querySelectorAll("a").forEach(function (a) {
+      a.addEventListener("click", function () { setMenu(false); });
+    });
+  }
+
+  /* ---------- Lenis smooth scroll ---------- */
+  var lenis = null;
+  if (!reduceMotion && window.Lenis) {
+    lenis = new Lenis({ duration: 1.05, smoothWheel: true, wheelMultiplier: 0.95 });
+    if (hasGsap) {
+      lenis.on("scroll", ScrollTrigger.update);
+      gsap.ticker.add(function (t) { lenis.raf(t * 1000); });
+      gsap.ticker.lagSmoothing(0);
+    } else {
+      requestAnimationFrame(function loop(t) { lenis.raf(t); requestAnimationFrame(loop); });
+    }
+  }
+
+  /* anchor links routed through Lenis so the smooth scroll stays consistent */
+  document.querySelectorAll('a[href^="#"]').forEach(function (a) {
+    a.addEventListener("click", function (e) {
+      var id = a.getAttribute("href");
+      if (!id || id === "#") return;
+      var target = document.querySelector(id);
+      if (!target) return;
+      e.preventDefault();
+      if (lenis) lenis.scrollTo(target, { offset: -76, duration: 1.2 });
+      else target.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" });
+    });
+  });
+
+  /* ---------- scroll progress + nav state ---------- */
+  var progressEl = document.getElementById("scroll-progress");
+  var nav = document.getElementById("site-nav");
+  var lastPct = -1;
+  function onScroll() {
+    var h = document.documentElement;
+    var max = h.scrollHeight - h.clientHeight;
+    var pct = max > 0 ? (h.scrollTop / max) * 100 : 0;
+    if (progressEl && Math.abs(pct - lastPct) > 0.1) { progressEl.style.width = pct + "%"; lastPct = pct; }
+    if (nav) nav.classList.toggle("is-stuck", h.scrollTop > 40);
+  }
+  window.addEventListener("scroll", onScroll, { passive: true });
+  onScroll();
+
+  /* ---------- headline mask reveal ---------- */
+  var maskInner = document.querySelectorAll(".mask > span");
+  if (hasGsap && !reduceMotion) {
+    gsap.set(maskInner, { yPercent: 104 });
+
+    // hero: play immediately
+    var heroLines = document.querySelectorAll(".hero-title .mask > span");
+    gsap.to(heroLines, { yPercent: 0, duration: 1.15, ease: "power4.out", stagger: 0.085, delay: 0.3 });
+
+    // everything else: on scroll, per heading
+    document.querySelectorAll("h1, h2, h3").forEach(function (h) {
+      if (h.closest(".hero-title")) return;
+      var lines = h.querySelectorAll(".mask > span");
+      if (!lines.length) return;
+      ScrollTrigger.create({
+        trigger: h, start: "top 88%", once: true,
+        onEnter: function () {
+          gsap.to(lines, { yPercent: 0, duration: 1, ease: "power4.out", stagger: 0.08 });
+        }
+      });
+    });
+  }
+
+  /* ---------- generic reveals ---------- */
+  if (hasGsap && !reduceMotion) {
+    gsap.set(".hero-fade", { opacity: 0, y: 12 });
+    gsap.to(".hero-fade", { opacity: 1, y: 0, duration: 0.9, ease: EASE, stagger: 0.09, delay: 0.75 });
+
+    document.querySelectorAll(".reveal").forEach(function (el) {
+      gsap.set(el, { opacity: 0, y: 16 });
+      ScrollTrigger.create({
+        trigger: el, start: "top 90%", once: true,
+        onEnter: function () { gsap.to(el, { opacity: 1, y: 0, duration: 0.85, ease: EASE }); }
+      });
+    });
+  }
+
+  /* ---------- hero video: entrance, playback, scroll parallax ---------- */
+  var heroVideo = document.getElementById("hero-video");
+  if (heroVideo) {
+    if (hasGsap && !reduceMotion) {
+      gsap.fromTo(heroVideo, { scale: 1.16, opacity: 0 }, { scale: 1.07, opacity: 1, duration: 1.9, ease: "power3.out", delay: 0.1 });
+      gsap.to(heroVideo, {
+        yPercent: 9, ease: "none",
+        scrollTrigger: { trigger: heroVideo.parentElement, start: "top top", end: "bottom top", scrub: true }
+      });
+    } else {
+      heroVideo.style.opacity = 1;
+    }
+
+    var playHero = function () { var p = heroVideo.play(); if (p && p.catch) p.catch(function () {}); };
+    if (reduceMotion) {
+      heroVideo.pause();
+    } else if (heroVideo.readyState >= 2) {
+      playHero();
+    } else {
+      heroVideo.addEventListener("loadeddata", playHero, { once: true });
+    }
+  }
+
+  /* ---------- count-up on the hero rail ---------- */
+  document.querySelectorAll(".counter").forEach(function (el) {
+    var target = parseFloat(el.getAttribute("data-target"));
+    var decimals = parseInt(el.getAttribute("data-decimals") || "0", 10);
+    if (!hasGsap || reduceMotion) { el.textContent = target.toFixed(decimals); return; }
+    var obj = { val: 0 };
+    ScrollTrigger.create({
+      trigger: el, start: "top 96%", once: true,
+      onEnter: function () {
+        gsap.to(obj, {
+          val: target, duration: 1.6, ease: "power2.out",
+          onUpdate: function () { el.textContent = obj.val.toFixed(decimals); }
+        });
+      }
+    });
+  });
+
+  /* ---------- product leader lines (unchanged behaviour) ---------- */
+  if (hasGsap) {
+    document.querySelectorAll(".product-row").forEach(function (row) {
+      var lines = row.querySelectorAll(".leader-line");
+      var dots = row.querySelectorAll(".leader-dot");
+      var texts = row.querySelectorAll(".leader-text");
+      lines.forEach(function (l) { l.style.strokeDasharray = "1"; l.style.strokeDashoffset = reduceMotion ? "0" : "1"; });
+      gsap.set(dots, { opacity: reduceMotion ? 1 : 0, transformOrigin: "center" });
+      if (reduceMotion) { gsap.set(texts, { opacity: 1 }); return; }
+      gsap.timeline({ scrollTrigger: { trigger: row, start: "top 65%", once: true } })
+        .to(lines, { strokeDashoffset: 0, duration: 0.8, ease: "power2.inOut", stagger: 0.15 })
+        .to(dots, { opacity: 1, duration: 0.3 }, "-=0.3")
+        .to(texts, { opacity: 1, duration: 0.4, stagger: 0.1 }, "-=0.2");
+    });
+  }
+
+  /* ---------- ChaiCloud panel powers up ---------- */
+  if (hasGsap && !reduceMotion) {
+    var panel = document.querySelector(".chaicloud-panel");
+    if (panel) {
+      var barsEl = panel.querySelectorAll(".bar");
+      var targets = [];
+      barsEl.forEach(function (b) { targets.push(b.style.height); });
+      gsap.set(panel, { opacity: 0, y: 20 });
+      gsap.set(barsEl, { height: "0%" });
+      ScrollTrigger.create({
+        trigger: panel, start: "top 82%", once: true,
+        onEnter: function () {
+          var tl = gsap.timeline();
+          tl.to(panel, { opacity: 1, y: 0, duration: 0.8, ease: EASE });
+          barsEl.forEach(function (b, i) {
+            tl.to(b, { height: targets[i], duration: 0.65, ease: EASE }, i === 0 ? "-=0.4" : "-=0.55");
+          });
+        }
+      });
+    }
+  }
+
+  /* ---------- testimonial rules draw, then the quote fades up ---------- */
+  if (hasGsap && !reduceMotion) {
+    document.querySelectorAll(".testimonial-card").forEach(function (card, i) {
+      var rule = card.querySelector(".card-rule");
+      var copy = card.querySelectorAll(".card-copy");
+      gsap.set(rule, { scaleY: 0 });
+      gsap.set(copy, { opacity: 0, y: 10 });
+      ScrollTrigger.create({
+        trigger: card, start: "top 86%", once: true,
+        onEnter: function () {
+          gsap.timeline({ delay: i * 0.1 })
+            .to(rule, { scaleY: 1, duration: 0.7, ease: "power2.inOut" })
+            .to(copy, { opacity: 1, y: 0, duration: 0.6, stagger: 0.09, ease: EASE }, "-=0.35");
+        }
+      });
+    });
+  }
+
+  /* ---------- accordion: keep only one FAQ open, and refresh triggers ---------- */
+  var faqItems = document.querySelectorAll(".faq details");
+  faqItems.forEach(function (d) {
+    d.addEventListener("toggle", function () {
+      if (d.open) faqItems.forEach(function (o) { if (o !== d) o.open = false; });
+      if (hasGsap) ScrollTrigger.refresh();
+    });
+  });
+
+  /* ---------- form: floating labels + mailto compose ---------- */
+  document.querySelectorAll(".field input, .field textarea, .field select").forEach(function (el) {
+    var field = el.closest(".field");
+    var sync = function () { field.classList.toggle("filled", !!el.value); };
+    el.addEventListener("input", sync);
+    el.addEventListener("change", sync);
+    if (el.tagName === "SELECT") field.classList.add("filled");
+    sync();
+  });
+
+  var form = document.getElementById("enquiry");
+  var note = document.getElementById("form-note");
+  if (form) {
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      var v = function (id) { var el = document.getElementById(id); return el ? el.value.trim() : ""; };
+      var name = v("f-name"), email = v("f-email");
+
+      if (!name || !email || email.indexOf("@") < 1) {
+        note.hidden = false;
+        note.style.color = "#C6503A";
+        note.textContent = "Please add your name and a valid email so we can reply.";
+        return;
+      }
+
+      var body = [
+        "Name: " + name,
+        "Company: " + (v("f-company") || "—"),
+        "Email: " + email,
+        "Phone: " + (v("f-phone") || "—"),
+        "Interested in: " + v("f-product"),
+        "Cups per day: " + v("f-volume"),
+        "",
+        "About our sites:",
+        v("f-desc") || "—"
+      ].join("\n");
+
+      var subject = "Machine enquiry — " + (v("f-company") || name);
+      window.location.href = "mailto:contact@antigra.com?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
+
+      note.hidden = false;
+      note.style.color = "#D9A05B";
+      note.textContent = "Opening your mail client. If nothing happens, email contact@antigra.com directly.";
+    });
+  }
+
+  /* ---------- keep ScrollTrigger honest once fonts and images settle ---------- */
+  if (hasGsap) {
+    window.addEventListener("load", function () { ScrollTrigger.refresh(); });
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(function () { ScrollTrigger.refresh(); });
+    }
+  }
+
+})();
+</script>
+</body>
+</html>

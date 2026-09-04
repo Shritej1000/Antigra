@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ChaiCloud Dashboard — AntiGra Systems</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter+Tight:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@200..600,0..1&display=swap" rel="stylesheet"/>
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          ink: "#0E0D0B",
+          "ink-soft": "#16130F",
+          paper: "#FBF8F2",
+          "paper-dim": "#F1ECE1",
+          line: "#E5DFD2",
+          copper: "#B85C33",
+          gold: "#A97218",
+          steel: "#4A5058",
+          "steel-light": "#6C7278",
+          online: "#3E8F63",
+          offline: "#9A9D93",
+          alert: "#B23A24",
+          "alert-bg": "#FBEAE5",
+          warn: "#B5791E",
+          "warn-bg": "#FBF1DE"
+        },
+        fontFamily: {
+          display: ["Instrument Serif", "Georgia", "serif"],
+          grotesk: ["Inter Tight", "system-ui", "sans-serif"],
+          sans: ["Inter Tight", "system-ui", "sans-serif"],
+          mono: ["JetBrains Mono", "ui-monospace", "monospace"]
+        }
+      }
+    }
+  };
+</script>
+
+<style>
+  html { -webkit-font-smoothing:antialiased; }
+  body { font-feature-settings: "tnum" 1; letter-spacing:-0.006em; }
+  .lbl { font-family:"JetBrains Mono", ui-monospace, monospace; font-size:10.5px; letter-spacing:.18em; text-transform:uppercase; }
+  .num { font-family:"JetBrains Mono", ui-monospace, monospace; font-variant-numeric:tabular-nums; }
+  .tabular { font-variant-numeric: tabular-nums; }
+  a:focus-visible, button:focus-visible { outline: 2px solid #B85C33; outline-offset: 2px; }
+
+  .panel { display:none; }
+  .panel.active { display:block; }
+
+  .side-link { position:relative; }
+  .side-link.active { color:#FBF8F2; font-weight:600; }
+  .side-link.active::before { content:""; position:absolute; left:-16px; top:50%; transform:translateY(-50%); width:3px; height:16px; background:#B85C33; }
+
+  .tab-btn.active { background:#121110; color:#FBF9F5; }
+
+  .bar { transition: height .5s ease; }
+
+  ::-webkit-scrollbar { width:8px; height:8px; }
+  ::-webkit-scrollbar-thumb { background:#D8D2C4; border-radius:4px; }
+</style>
+</head>
+
+<body class="bg-paper text-ink font-sans antialiased">
+
+<div class="flex min-h-screen bg-paper">
+
+  <!-- SIDEBAR -->
+  <aside class="hidden md:flex w-64 shrink-0 flex-col self-stretch bg-ink text-paper/80 px-6 py-7">
+    <a href="index.html" class="flex items-center gap-2 text-paper/50 hover:text-paper text-[13px] mb-8 transition-colors">
+      <span class="material-symbols-outlined text-[16px]">arrow_back</span> AntiGra Systems
+    </a>
+
+    <div class="flex items-center gap-2.5 mb-10">
+      <svg width="24" height="24" viewBox="0 0 30 30" fill="none"><circle cx="15" cy="15" r="13.5" stroke="#D9A05B" stroke-width="1"/><path d="M9 18.5C9 14 11.5 10 15 8C18.5 10 21 14 21 18.5" stroke="#F0EAE0" stroke-width="1.2" fill="none"/></svg>
+      <span class="font-grotesk font-bold text-[17px] text-paper">ChaiCloud</span>
+    </div>
+
+    <nav class="flex-1 flex flex-col gap-7 text-[14px]">
+      <div>
+        <button class="side-link nav-item active flex items-center gap-2.5 hover:text-paper transition-colors" data-panel="overview">
+          <span class="material-symbols-outlined text-[19px]">grid_view</span> Overview
+        </button>
+      </div>
+
+      <div>
+        <p class="text-[11px] tracking-wide text-paper/35 mb-2.5 px-0">Machines</p>
+        <div class="flex flex-col gap-2 pl-0.5">
+          <button class="side-link nav-item flex items-center gap-2.5 hover:text-paper transition-colors" data-panel="machines"><span class="material-symbols-outlined text-[18px]">precision_manufacturing</span> Status &amp; health</button>
+          <button class="side-link nav-item flex items-center gap-2.5 hover:text-paper transition-colors" data-panel="machines" data-sub="recipes"><span class="material-symbols-outlined text-[18px]">receipt_long</span> Recipes</button>
+          <button class="side-link nav-item flex items-center gap-2.5 hover:text-paper transition-colors" data-panel="machines" data-sub="errors"><span class="material-symbols-outlined text-[18px]">error</span> Errors</button>
+        </div>
+      </div>
+
+      <div>
+        <p class="text-[11px] tracking-wide text-paper/35 mb-2.5">Usage</p>
+        <div class="flex flex-col gap-2 pl-0.5">
+          <button class="side-link nav-item flex items-center gap-2.5 hover:text-paper transition-colors" data-panel="usage"><span class="material-symbols-outlined text-[18px]">coffee</span> Cups &amp; batches</button>
+          <button class="side-link nav-item flex items-center gap-2.5 hover:text-paper transition-colors" data-panel="usage" data-sub="consumption"><span class="material-symbols-outlined text-[18px]">water_drop</span> Consumption</button>
+        </div>
+      </div>
+
+      <div>
+        <p class="text-[11px] tracking-wide text-paper/35 mb-2.5">Analytics</p>
+        <div class="flex flex-col gap-2 pl-0.5">
+          <button class="side-link nav-item flex items-center gap-2.5 hover:text-paper transition-colors" data-panel="analytics"><span class="material-symbols-outlined text-[18px]">insights</span> Trends &amp; efficiency</button>
+          <button class="side-link nav-item flex items-center gap-2.5 hover:text-paper transition-colors" data-panel="analytics" data-sub="compare"><span class="material-symbols-outlined text-[18px]">compare_arrows</span> Comparison</button>
+          <button class="side-link nav-item flex items-center gap-2.5 hover:text-paper transition-colors" data-panel="analytics" data-sub="location"><span class="material-symbols-outlined text-[18px]">location_on</span> By location</button>
+        </div>
+      </div>
+    </nav>
+
+    <div class="pt-6 mt-6 border-t border-paper/10 text-[12px] text-paper/40">
+      42 machines connected · v2.3
+    </div>
+  </aside>
+
+  <!-- MOBILE TOPBAR NAV -->
+  <div class="md:hidden fixed top-0 inset-x-0 z-40 bg-ink text-paper flex items-center justify-between px-4 h-14">
+    <span class="font-grotesk font-bold text-[15px]">ChaiCloud</span>
+    <select id="mobile-nav" class="bg-ink-soft text-paper text-[13px] px-2 py-1.5 border border-paper/15 rounded">
+      <option value="overview">Overview</option>
+      <option value="machines">Machines</option>
+      <option value="usage">Usage</option>
+      <option value="analytics">Analytics</option>
+    </select>
+  </div>
+
+  <!-- MAIN -->
+  <div class="flex-1 min-w-0 pt-14 md:pt-0">
+
+    <!-- TOPBAR -->
+    <header class="sticky top-14 md:top-0 z-30 bg-paper/90 backdrop-blur border-b border-line px-5 md:px-9 h-16 flex items-center justify-between">
+      <h1 id="page-title" class="font-grotesk font-bold text-[19px]">Overview</h1>
+      <div class="flex items-center gap-4">
+        <div class="hidden sm:flex items-center gap-1 bg-paper-dim border border-line rounded-full p-0.5 text-[13px]">
+          <button class="range-btn tab-btn active px-3.5 py-1.5 rounded-full transition-colors" data-range="daily">Day</button>
+          <button class="range-btn tab-btn px-3.5 py-1.5 rounded-full transition-colors" data-range="weekly">Week</button>
+          <button class="range-btn tab-btn px-3.5 py-1.5 rounded-full transition-colors" data-range="monthly">Month</button>
+        </div>
+        <div class="w-8 h-8 rounded-full bg-copper text-paper flex items-center justify-center text-[13px] font-medium">AG</div>
+      </div>
+    </header>
+
+    <div class="px-5 md:px-9 py-8 max-w-[1200px]">
+
+      <!-- OVERVIEW PANEL -->
+      <section id="panel-overview" class="panel active">
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+          <div class="bg-white border border-line p-5">
+            <p class="text-[13px] text-steel-light">Machines online</p>
+            <p class="font-grotesk font-bold text-[30px] tabular mt-1.5">38<span class="text-steel-light text-[18px]"> / 42</span></p>
+            <p class="text-[12px] text-online mt-1.5 flex items-center gap-1"><span class="material-symbols-outlined text-[15px]">trending_up</span> 90% fleet uptime</p>
+          </div>
+          <div class="bg-white border border-line p-5">
+            <p class="text-[13px] text-steel-light">Cups brewed today</p>
+            <p class="font-grotesk font-bold text-[30px] tabular mt-1.5">4,812</p>
+            <p class="text-[12px] text-online mt-1.5 flex items-center gap-1"><span class="material-symbols-outlined text-[15px]">trending_up</span> +6.1% vs. yesterday</p>
+          </div>
+          <div class="bg-white border border-line p-5">
+            <p class="text-[13px] text-steel-light">Avg. machine health</p>
+            <p class="font-grotesk font-bold text-[30px] tabular mt-1.5">90%</p>
+            <p class="text-[12px] text-steel-light mt-1.5">Across 42 units</p>
+          </div>
+          <div class="bg-white border border-line p-5">
+            <p class="text-[13px] text-steel-light">Active alerts</p>
+            <p class="font-grotesk font-bold text-[30px] tabular mt-1.5 text-alert">3</p>
+            <p class="text-[12px] text-alert mt-1.5">2 machines offline</p>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-5 gap-4 mt-5">
+          <div class="lg:col-span-3 bg-white border border-line p-5">
+            <div class="flex items-center justify-between mb-4">
+              <p class="font-grotesk font-semibold text-[15px]">Cups brewed</p>
+              <span id="usage-range-label" class="text-[12px] text-steel-light">Last 7 days</span>
+            </div>
+            <div id="overview-chart" class="flex items-end gap-2 h-40"></div>
+          </div>
+          <div class="lg:col-span-2 bg-white border border-line p-5">
+            <p class="font-grotesk font-semibold text-[15px] mb-4">Fleet by status</p>
+            <div class="flex flex-col gap-3 text-[14px]">
+              <div class="flex items-center justify-between"><span class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-online"></span>Online</span><span class="tabular">38</span></div>
+              <div class="w-full h-1.5 bg-paper-dim rounded-full overflow-hidden"><div class="h-full bg-online" style="width:90.5%"></div></div>
+              <div class="flex items-center justify-between mt-2"><span class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-offline"></span>Offline</span><span class="tabular">4</span></div>
+              <div class="w-full h-1.5 bg-paper-dim rounded-full overflow-hidden"><div class="h-full bg-offline" style="width:9.5%"></div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-5 bg-white border border-line">
+          <div class="flex items-center justify-between px-5 py-4 border-b border-line">
+            <p class="font-grotesk font-semibold text-[15px]">Machines needing attention</p>
+            <button class="nav-item text-[13px] text-copper hover:underline" data-panel="machines">View all machines →</button>
+          </div>
+          <div class="divide-y divide-line" id="attention-rows"></div>
+        </div>
+      </section>
+
+      <!-- MACHINES PANEL -->
+      <section id="panel-machines" class="panel">
+        <div class="flex flex-wrap items-center gap-2 mb-5 text-[13px]">
+          <button class="filter-btn tab-btn active px-3.5 py-1.5 border border-line" data-filter="all">All (8)</button>
+          <button class="filter-btn tab-btn px-3.5 py-1.5 border border-line" data-filter="online">Online (6)</button>
+          <button class="filter-btn tab-btn px-3.5 py-1.5 border border-line" data-filter="offline">Offline (2)</button>
+          <button class="filter-btn tab-btn px-3.5 py-1.5 border border-line" data-filter="alert">Alerts (3)</button>
+        </div>
+
+        <div class="bg-white border border-line overflow-x-auto">
+          <table class="w-full text-[13.5px] min-w-[820px]">
+            <thead>
+              <tr class="text-left text-steel-light border-b border-line">
+                <th class="font-medium px-4 py-3">Machine</th>
+                <th class="font-medium px-4 py-3">Location</th>
+                <th class="font-medium px-4 py-3">Status</th>
+                <th class="font-medium px-4 py-3">Health</th>
+                <th class="font-medium px-4 py-3">Recipe</th>
+                <th class="font-medium px-4 py-3">Last error</th>
+                <th class="font-medium px-4 py-3">Maintained</th>
+                <th class="font-medium px-4 py-3"></th>
+              </tr>
+            </thead>
+            <tbody id="machines-tbody" class="divide-y divide-line"></tbody>
+          </table>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-5">
+          <div class="bg-white border border-line p-5">
+            <p class="font-grotesk font-semibold text-[15px] mb-4">Recipe configuration</p>
+            <div class="divide-y divide-line" id="recipes-list"></div>
+          </div>
+          <div class="bg-white border border-line p-5">
+            <p class="font-grotesk font-semibold text-[15px] mb-1">Remote diagnostics — AG-SM-011</p>
+            <p class="text-[12px] text-steel-light mb-4">Mumbai, Andheri · Offline since 08:14</p>
+            <div class="grid grid-cols-2 gap-4 text-[13px]">
+              <div class="border border-line p-3"><p class="text-steel-light">Water sensor</p><p class="font-medium text-alert mt-1">Fault</p></div>
+              <div class="border border-line p-3"><p class="text-steel-light">Brew temp</p><p class="font-medium mt-1 tabular">—</p></div>
+              <div class="border border-line p-3"><p class="text-steel-light">Milk level</p><p class="font-medium mt-1 tabular">62%</p></div>
+              <div class="border border-line p-3"><p class="text-steel-light">Network</p><p class="font-medium text-online mt-1">Connected</p></div>
+            </div>
+            <button class="mt-4 w-full py-2.5 border border-line text-[13px] font-medium hover:bg-paper-dim transition-colors">Run remote diagnostic</button>
+          </div>
+        </div>
+
+        <div class="bg-white border border-line mt-5">
+          <p class="font-grotesk font-semibold text-[15px] px-5 pt-5 pb-1">Active error alerts</p>
+          <div class="divide-y divide-line" id="alerts-list"></div>
+        </div>
+
+        <div class="bg-white border border-line mt-5 p-5">
+          <p class="font-grotesk font-semibold text-[15px] mb-4">Maintenance history — AG-SM-011</p>
+          <div class="flex flex-col gap-4 text-[13.5px]">
+            <div class="flex gap-4"><span class="text-steel-light w-24 shrink-0 tabular">14 May 2026</span><span>Replaced faulty water sensor, recalibrated flow rate</span></div>
+            <div class="flex gap-4"><span class="text-steel-light w-24 shrink-0 tabular">02 Feb 2026</span><span>Scheduled descaling service</span></div>
+            <div class="flex gap-4"><span class="text-steel-light w-24 shrink-0 tabular">18 Nov 2025</span><span>Firmware updated to v3.2</span></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- USAGE PANEL -->
+      <section id="panel-usage" class="panel">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+          <div class="bg-white border border-line p-5">
+            <p class="text-[13px] text-steel-light">Cups this period</p>
+            <p id="usage-total" class="font-grotesk font-bold text-[30px] tabular mt-1.5">4,812</p>
+          </div>
+          <div class="bg-white border border-line p-5">
+            <p class="text-[13px] text-steel-light">Batches brewed</p>
+            <p id="usage-batches" class="font-grotesk font-bold text-[30px] tabular mt-1.5">312</p>
+          </div>
+          <div class="bg-white border border-line p-5">
+            <p class="text-[13px] text-steel-light">Avg. cups / batch</p>
+            <p id="usage-avg" class="font-grotesk font-bold text-[30px] tabular mt-1.5">15.4</p>
+          </div>
+        </div>
+
+        <div class="bg-white border border-line p-5 mt-5">
+          <div class="flex items-center justify-between mb-4">
+            <p class="font-grotesk font-semibold text-[15px]">Cups &amp; batches over time</p>
+            <span id="usage-chart-label" class="text-[12px] text-steel-light">Last 7 days</span>
+          </div>
+          <div id="usage-chart" class="flex items-end gap-2.5 h-48"></div>
+        </div>
+
+        <div class="bg-white border border-line p-5 mt-5">
+          <p class="font-grotesk font-semibold text-[15px] mb-4">Consumption trend — tea leaves &amp; milk (last 14 days)</p>
+          <svg id="consumption-svg" viewBox="0 0 560 140" class="w-full h-36"></svg>
+        </div>
+      </section>
+
+      <!-- ANALYTICS PANEL -->
+      <section id="panel-analytics" class="panel">
+        <div class="bg-white border border-line p-5">
+          <p class="font-grotesk font-semibold text-[15px] mb-4">Usage trend — monthly cups, past 12 months</p>
+          <svg id="trend-svg" viewBox="0 0 720 160" class="w-full h-40"></svg>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-5">
+          <div class="bg-white border border-line p-5">
+            <p class="font-grotesk font-semibold text-[15px] mb-4">Efficiency — cups per kg of tea leaves</p>
+            <div class="flex flex-col gap-3.5" id="efficiency-list"></div>
+          </div>
+          <div class="bg-white border border-line p-5">
+            <p class="font-grotesk font-semibold text-[15px] mb-4">Location-wise analytics</p>
+            <div class="flex flex-col gap-3.5" id="location-list"></div>
+          </div>
+        </div>
+
+        <div class="bg-white border border-line mt-5 p-5 overflow-x-auto">
+          <p class="font-grotesk font-semibold text-[15px] mb-4">Machine comparison</p>
+          <table class="w-full text-[13.5px] min-w-[560px]">
+            <thead>
+              <tr class="text-left text-steel-light border-b border-line">
+                <th class="font-medium py-2.5">Metric</th>
+                <th class="font-medium py-2.5">SuperBrew SA</th>
+                <th class="font-medium py-2.5">SuperBrew Automatic</th>
+                <th class="font-medium py-2.5">SmartBrew</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-line">
+              <tr><td class="py-2.5 text-steel-light">Cups / day (avg)</td><td class="py-2.5 tabular">410</td><td class="py-2.5 tabular">385</td><td class="py-2.5 tabular">620</td></tr>
+              <tr><td class="py-2.5 text-steel-light">Cups per kg leaves</td><td class="py-2.5 tabular">410</td><td class="py-2.5 tabular">385</td><td class="py-2.5 tabular">460</td></tr>
+              <tr><td class="py-2.5 text-steel-light">Avg. uptime</td><td class="py-2.5 tabular">98.2%</td><td class="py-2.5 tabular">96.8%</td><td class="py-2.5 tabular">97.5%</td></tr>
+              <tr><td class="py-2.5 text-steel-light">Avg. dispense time</td><td class="py-2.5 tabular">42s</td><td class="py-2.5 tabular">27s</td><td class="py-2.5 tabular">18s</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  /* ---------------- mock data ---------------- */
+  var machines = [
+    { id: "AG-SA-014", loc: "Bengaluru, HSR Layout", status: "online", health: 96, recipe: "Masala Chai", error: "—", maint: "12 Aug 2026" },
+    { id: "AG-SA-021", loc: "Bengaluru, Koramangala", status: "online", health: 91, recipe: "Kadak Chai", error: "—", maint: "03 Jul 2026" },
+    { id: "AG-SM-007", loc: "Mumbai, BKC", status: "online", health: 88, recipe: "Ginger Chai", error: "—", maint: "22 Aug 2026" },
+    { id: "AG-SM-011", loc: "Mumbai, Andheri", status: "offline", health: 54, recipe: "Masala Chai", error: "Water sensor fault", maint: "14 May 2026" },
+    { id: "AG-AUT-033", loc: "Pune, Hinjewadi", status: "online", health: 97, recipe: "Filter Coffee", error: "—", maint: "30 Aug 2026" },
+    { id: "AG-AUT-041", loc: "Pune, Baner", status: "offline", health: 61, recipe: "Masala Chai", error: "Heater timeout", maint: "02 Jun 2026" },
+    { id: "AG-SA-052", loc: "Delhi, Cyber City", status: "online", health: 93, recipe: "Kadak Chai", error: "—", maint: "19 Aug 2026" },
+    { id: "AG-SM-018", loc: "Hyderabad, Hitec City", status: "online", health: 85, recipe: "Ginger Chai", error: "Low milk alert", maint: "27 Jul 2026" }
+  ];
+
+  var recipes = [
+    { name: "Masala Chai", vol: "220 ml", temp: "96°C", brew: "45s" },
+    { name: "Ginger Chai", vol: "220 ml", temp: "94°C", brew: "50s" },
+    { name: "Kadak Chai", vol: "180 ml", temp: "98°C", brew: "55s" },
+    { name: "Filter Coffee", vol: "150 ml", temp: "92°C", brew: "40s" }
+  ];
+
+  var alerts = [
+    { id: "AG-SM-011", issue: "Water sensor fault", sev: "High", time: "2h ago" },
+    { id: "AG-AUT-041", issue: "Heater timeout", sev: "Medium", time: "5h ago" },
+    { id: "AG-SM-018", issue: "Low milk level", sev: "Low", time: "40m ago" }
+  ];
+
+  var usageData = {
+    daily: { labels: ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"], values: [3980,4210,4055,4590,4812,3690,3125], total: 27462, batches: 1782, avg: 15.4, label: "Last 7 days" },
+    weekly: { labels: ["W1","W2","W3","W4","W5","W6","W7","W8"], values: [24800,26010,25340,27980,29110,28430,30250,31480], total: 223400, batches: 14510, avg: 15.4, label: "Last 8 weeks" },
+    monthly: { labels: ["Feb","Mar","Apr","May","Jun","Jul","Aug","Sep"], values: [98200,101400,104800,110200,118900,121300,126800,132100], total: 913700, batches: 59340, avg: 15.4, label: "Last 8 months" }
+  };
+
+  var efficiency = [
+    { name: "SmartBrew", value: 460 },
+    { name: "SuperBrew SA", value: 410 },
+    { name: "SuperBrew Automatic", value: 385 }
+  ];
+
+  var locations = [
+    { name: "Bengaluru", cups: 1240, machines: 6 },
+    { name: "Mumbai", cups: 980, machines: 4 },
+    { name: "Pune", cups: 860, machines: 5 },
+    { name: "Delhi", cups: 640, machines: 3 },
+    { name: "Hyderabad", cups: 520, machines: 2 },
+    { name: "Chennai", cups: 410, machines: 2 }
+  ];
+
+  var monthlyTrend = [72,78,75,84,90,88,95,101,98,110,118,126]; // 12 months, thousands
+
+  /* ---------------- render: machines table ---------------- */
+  var tbody = document.getElementById("machines-tbody");
+  function statusPill(status) {
+    if (status === "online") {
+      return '<span class="inline-flex items-center gap-1.5 text-online text-[13px] font-medium"><span class="w-1.5 h-1.5 rounded-full bg-online"></span>Online</span>';
+    }
+    return '<span class="inline-flex items-center gap-1.5 text-alert text-[13px] font-medium"><span class="w-1.5 h-1.5 rounded-full bg-alert"></span>Offline</span>';
+  }
+  function renderMachines(filter) {
+    tbody.innerHTML = "";
+    machines.forEach(function (m) {
+      if (filter === "online" && m.status !== "online") return;
+      if (filter === "offline" && m.status !== "offline") return;
+      if (filter === "alert" && m.error === "—") return;
+      var tr = document.createElement("tr");
+      tr.innerHTML =
+        '<td class="px-4 py-3 font-medium tabular">' + m.id + '</td>' +
+        '<td class="px-4 py-3 text-steel-light">' + m.loc + '</td>' +
+        '<td class="px-4 py-3">' + statusPill(m.status) + '</td>' +
+        '<td class="px-4 py-3 tabular">' + m.health + '%</td>' +
+        '<td class="px-4 py-3">' + m.recipe + '</td>' +
+        '<td class="px-4 py-3 ' + (m.error !== "—" ? "text-alert" : "text-steel-light") + '">' + m.error + '</td>' +
+        '<td class="px-4 py-3 text-steel-light tabular">' + m.maint + '</td>' +
+        '<td class="px-4 py-3"><button class="text-copper text-[12.5px] hover:underline whitespace-nowrap">Diagnose</button></td>';
+      tbody.appendChild(tr);
+    });
+  }
+  renderMachines("all");
+
+  document.querySelectorAll(".filter-btn").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      document.querySelectorAll(".filter-btn").forEach(function (b) { b.classList.remove("active"); });
+      btn.classList.add("active");
+      renderMachines(btn.getAttribute("data-filter"));
+    });
+  });
+
+  /* ---------------- attention rows (overview) ---------------- */
+  var attentionEl = document.getElementById("attention-rows");
+  machines.filter(function (m) { return m.status === "offline" || m.error !== "—"; }).forEach(function (m) {
+    var row = document.createElement("div");
+    row.className = "flex items-center justify-between px-5 py-3.5 text-[13.5px]";
+    row.innerHTML =
+      '<span class="flex items-center gap-3"><span class="tabular font-medium">' + m.id + '</span><span class="text-steel-light">' + m.loc + '</span></span>' +
+      '<span class="text-alert">' + (m.status === "offline" ? "Offline" : m.error) + '</span>';
+    attentionEl.appendChild(row);
+  });
+
+  /* ---------------- recipes ---------------- */
+  var recipesEl = document.getElementById("recipes-list");
+  recipes.forEach(function (r) {
+    var row = document.createElement("div");
+    row.className = "flex items-center justify-between py-3 text-[13.5px]";
+    row.innerHTML = '<span class="font-medium">' + r.name + '</span><span class="text-steel-light tabular">' + r.vol + ' · ' + r.temp + ' · ' + r.brew + '</span>';
+    recipesEl.appendChild(row);
+  });
+
+  /* ---------------- alerts ---------------- */
+  var alertsEl = document.getElementById("alerts-list");
+  var sevColor = { High: "text-alert", Medium: "text-warn", Low: "text-steel-light" };
+  alerts.forEach(function (a) {
+    var row = document.createElement("div");
+    row.className = "flex items-center justify-between px-5 py-3.5 text-[13.5px]";
+    row.innerHTML =
+      '<span class="flex items-center gap-3"><span class="tabular font-medium">' + a.id + '</span><span>' + a.issue + '</span></span>' +
+      '<span class="flex items-center gap-4"><span class="' + sevColor[a.sev] + ' font-medium">' + a.sev + '</span><span class="text-steel-light tabular">' + a.time + '</span></span>';
+    alertsEl.appendChild(row);
+  });
+
+  /* ---------------- bar chart renderer ---------------- */
+  function renderBars(container, labels, values, barColorClass) {
+    container.innerHTML = "";
+    var max = Math.max.apply(null, values);
+    labels.forEach(function (label, i) {
+      var col = document.createElement("div");
+      col.className = "flex-1 flex flex-col items-center justify-end gap-2 h-full";
+      var pct = Math.round((values[i] / max) * 100);
+      col.innerHTML =
+        '<div class="w-full flex-1 flex items-end"><div class="bar w-full ' + barColorClass + '" style="height:' + pct + '%"></div></div>' +
+        '<span class="text-[11px] text-steel-light tabular">' + label + '</span>';
+      container.appendChild(col);
+    });
+  }
+
+  var overviewChart = document.getElementById("overview-chart");
+  var usageChart = document.getElementById("usage-chart");
+  var usageRangeLabel = document.getElementById("usage-chart-label");
+  var overviewRangeLabel = document.getElementById("usage-range-label");
+  var usageTotal = document.getElementById("usage-total");
+  var usageBatches = document.getElementById("usage-batches");
+  var usageAvg = document.getElementById("usage-avg");
+
+  function applyRange(range) {
+    var d = usageData[range];
+    renderBars(overviewChart, d.labels, d.values, "bg-copper");
+    renderBars(usageChart, d.labels, d.values, "bg-gold");
+    overviewRangeLabel.textContent = d.label;
+    usageRangeLabel.textContent = d.label;
+    usageTotal.textContent = d.total.toLocaleString();
+    usageBatches.textContent = d.batches.toLocaleString();
+    usageAvg.textContent = d.avg;
+  }
+  applyRange("daily");
+
+  document.querySelectorAll(".range-btn").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      document.querySelectorAll(".range-btn").forEach(function (b) { b.classList.remove("active"); });
+      btn.classList.add("active");
+      applyRange(btn.getAttribute("data-range"));
+    });
+  });
+
+  /* ---------------- efficiency + location lists ---------------- */
+  var effEl = document.getElementById("efficiency-list");
+  var effMax = Math.max.apply(null, efficiency.map(function (e) { return e.value; }));
+  efficiency.forEach(function (e) {
+    var row = document.createElement("div");
+    var pct = Math.round((e.value / effMax) * 100);
+    row.innerHTML =
+      '<div class="flex items-center justify-between text-[13.5px] mb-1.5"><span>' + e.name + '</span><span class="tabular text-steel-light">' + e.value + ' cups/kg</span></div>' +
+      '<div class="w-full h-1.5 bg-paper-dim rounded-full overflow-hidden"><div class="h-full bg-copper" style="width:' + pct + '%"></div></div>';
+    row.className = "mb-1";
+    effEl.appendChild(row);
+  });
+
+  var locEl = document.getElementById("location-list");
+  var locMax = Math.max.apply(null, locations.map(function (l) { return l.cups; }));
+  locations.forEach(function (l) {
+    var row = document.createElement("div");
+    var pct = Math.round((l.cups / locMax) * 100);
+    row.innerHTML =
+      '<div class="flex items-center justify-between text-[13.5px] mb-1.5"><span>' + l.name + ' <span class="text-steel-light">· ' + l.machines + ' machines</span></span><span class="tabular text-steel-light">' + l.cups + ' cups/day</span></div>' +
+      '<div class="w-full h-1.5 bg-paper-dim rounded-full overflow-hidden"><div class="h-full bg-gold" style="width:' + pct + '%"></div></div>';
+    row.className = "mb-1";
+    locEl.appendChild(row);
+  });
+
+  /* ---------------- line charts (svg) ---------------- */
+  function drawLine(svgEl, values, color, w, h, pad) {
+    var max = Math.max.apply(null, values), min = Math.min.apply(null, values);
+    var range = (max - min) || 1;
+    var step = (w - pad * 2) / (values.length - 1);
+    var pts = values.map(function (v, i) {
+      var x = pad + i * step;
+      var y = h - pad - ((v - min) / range) * (h - pad * 2);
+      return x.toFixed(1) + "," + y.toFixed(1);
+    });
+    var poly = document.createElementNS("http://www.w3.org/2000/svg", "polyline");
+    poly.setAttribute("points", pts.join(" "));
+    poly.setAttribute("fill", "none");
+    poly.setAttribute("stroke", color);
+    poly.setAttribute("stroke-width", "2");
+    poly.setAttribute("stroke-linecap", "round");
+    poly.setAttribute("stroke-linejoin", "round");
+    svgEl.appendChild(poly);
+    pts.forEach(function (p) {
+      var xy = p.split(",");
+      var c = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+      c.setAttribute("cx", xy[0]); c.setAttribute("cy", xy[1]); c.setAttribute("r", "2.5");
+      c.setAttribute("fill", color);
+      svgEl.appendChild(c);
+    });
+  }
+
+  var consumptionSvg = document.getElementById("consumption-svg");
+  var teaLeaves = [42,45,44,48,52,49,53,55,51,58,60,57,62,64];
+  var milk = [64,68,66,71,76,73,78,80,75,84,86,82,88,90];
+  drawLine(consumptionSvg, teaLeaves, "#B85C33", 560, 140, 12);
+  drawLine(consumptionSvg, milk, "#4A5058", 560, 140, 12);
+
+  var trendSvg = document.getElementById("trend-svg");
+  drawLine(trendSvg, monthlyTrend, "#B5791E", 720, 160, 16);
+
+  /* ---------------- nav switching ---------------- */
+  var panels = document.querySelectorAll(".panel");
+  var navItems = document.querySelectorAll(".nav-item");
+  var pageTitle = document.getElementById("page-title");
+  var titles = { overview: "Overview", machines: "Machines", usage: "Usage", analytics: "Analytics" };
+
+  function showPanel(name) {
+    panels.forEach(function (p) { p.classList.toggle("active", p.id === "panel-" + name); });
+    navItems.forEach(function (n) { n.classList.toggle("active", n.getAttribute("data-panel") === name); });
+    pageTitle.textContent = titles[name] || name;
+    var mobileNav = document.getElementById("mobile-nav");
+    if (mobileNav) mobileNav.value = name;
+    window.scrollTo({ top: 0, behavior: "auto" });
+  }
+
+  navItems.forEach(function (item) {
+    item.addEventListener("click", function () { showPanel(item.getAttribute("data-panel")); });
+  });
+
+  var mobileNav = document.getElementById("mobile-nav");
+  if (mobileNav) mobileNav.addEventListener("change", function () { showPanel(mobileNav.value); });
+
+})();
+</script>
+</body>
+</html>
